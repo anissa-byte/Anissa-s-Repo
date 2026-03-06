@@ -4,5 +4,19 @@
   "description": "Anissa's collection of Claude Code skills",
   "author": {
     "name": "Anissa Fulbright"
-  }
+  },
+  "skills": [
+    {
+      "name": "sob-webpage-generator",
+      "path": "skills/sob-webpage-generator/SKILL.md"
+    },
+    {
+      "name": "mindvalley-invoice",
+      "path": "skills/mindvalley-invoice/SKILL.md"
+    },
+    {
+      "name": "eowr-manager-response",
+      "path": "skills/eowr-manager-response/SKILL.md"
+    }
+  ]
 }
