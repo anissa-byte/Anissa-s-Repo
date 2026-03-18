@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Team Setup Guide — School of Bots</title>
+  <style>
+    :root {
+      --sob-heliotrope: #EB55F6;
+      --sob-navy: #04005B;
+      --sob-ebony: #0D0A1B;
+      --sob-white-smoke: #F8F9FA;
+      --sob-portage: #A59FF7;
+      --sob-texas-rose: #FFBD4A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--sob-white-smoke);
+      color: var(--sob-ebony);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header */
+    .guide-header {
+      background: var(--sob-navy);
+      color: var(--sob-white-smoke);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .guide-header h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-header p {
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: var(--sob-texas-rose);
+      color: var(--sob-ebony);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Navigation */
+    .toc {
+      background: white;
+      border: 1px solid rgba(4, 0, 91, 0.12);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .toc h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--sob-navy);
+      margin-bottom: 1rem;
+    }
+
+    .toc ol {
+      padding-left: 1.25rem;
+    }
+
+    .toc li {
+      margin-bottom: 0.4rem;
+    }
+
+    .toc a {
+      color: var(--sob-navy);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(4, 0, 91, 0.2);
+    }
+
+    .toc a:hover {
+      color: var(--sob-heliotrope);
+      border-bottom-color: var(--sob-heliotrope);
+    }
+
+    .toc .toc-time {
+      color: rgba(13, 10, 27, 0.5);
+      font-size: 0.85rem;
+      margin-left: 0.25rem;
+    }
+
+    /* Section styling */
+    .phase {
+      margin: 3rem 0;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(4, 0, 91, 0.1);
+    }
+
+    .phase:last-of-type {
+      border-bottom: none;
+    }
+
+    .phase-label {
+      display: inline-block;
+      background: var(--sob-navy);
+      color: var(--sob-texas-rose);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .phase-label.admin {
+      background: var(--sob-heliotrope);
+      color: var(--sob-ebony);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--sob-navy);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--sob-navy);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+      color: var(--sob-navy);
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+    }
+
+    ol, ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Callout boxes */
+    .callout {
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+    }
+
+    .callout h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-warning {
+      background: #FFF8E1;
+      border-left: 4px solid var(--sob-texas-rose);
+    }
+
+    .callout-info {
+      background: #EDE7F6;
+      border-left: 4px solid var(--sob-portage);
+    }
+
+    .callout-success {
+      background: #E8F5E9;
+      border-left: 4px solid #66BB6A;
+    }
+
+    .callout-danger {
+      background: #FFEBEE;
+      border-left: 4px solid #EF5350;
+    }
+
+    .callout-timing {
+      background: #E3F2FD;
+      border-left: 4px solid #42A5F5;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Screenshots */
+    .screenshot {
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+
+    .screenshot img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(4, 0, 91, 0.12);
+      box-shadow: 0 4px 6px -1px rgba(13, 10, 27, 0.1);
+    }
+
+    .screenshot .caption {
+      font-size: 0.85rem;
+      color: rgba(13, 10, 27, 0.6);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Code blocks */
+    code {
+      background: rgba(4, 0, 91, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    pre {
+      background: var(--sob-ebony);
+      color: #e0e0e0;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Prompt blocks */
+    .prompt-block {
+      background: var(--sob-ebony);
+      color: #e0e0e0;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .prompt-block .copy-label {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      background: var(--sob-texas-rose);
+      color: var(--sob-ebony);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--sob-navy);
+      color: var(--sob-white-smoke);
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(4, 0, 91, 0.08);
+    }
+
+    tr:nth-child(even) {
+      background: rgba(4, 0, 91, 0.03);
+    }
+
+    /* Cheat sheet */
+    .cheat-sheet {
+      background: white;
+      border: 2px solid var(--sob-texas-rose);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .cheat-sheet h3 {
+      color: var(--sob-navy);
+      margin-top: 0;
+    }
+
+    .cheat-phrase {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(4, 0, 91, 0.08);
+      align-items: flex-start;
+    }
+
+    .cheat-phrase:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .cheat-situation {
+      flex: 0 0 200px;
+      font-size: 0.85rem;
+      color: rgba(13, 10, 27, 0.65);
+    }
+
+    .cheat-say {
+      flex: 1;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      background: rgba(4, 0, 91, 0.04);
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* Done signals */
+    .done-signal {
+      background: #E8F5E9;
+      border: 1px solid #A5D6A7;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+
+    .done-signal strong {
+      color: #2E7D32;
+    }
+
+    /* Keyboard shortcuts */
+    kbd {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
+      font-size: 0.85em;
+      font-family: system-ui, sans-serif;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    }
+
+    /* Step markers */
+    .step {
+      counter-increment: step-counter;
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+      background: var(--sob-navy);
+      color: var(--sob-texas-rose);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .steps {
+      counter-reset: step-counter;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .guide-header h1 { font-size: 1.75rem; }
+      .container { padding: 1rem; }
+      .cheat-phrase { flex-direction: column; gap: 0.25rem; }
+      .cheat-situation { flex: none; }
+    }
+
+    /* Print */
+    @media print {
+      .guide-header { background: white; color: var(--sob-navy); }
+      .phase-label { border: 1px solid var(--sob-navy); background: white; color: var(--sob-navy); }
+      pre, .prompt-block { background: #f5f5f5; color: #333; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================== HEADER ============================== -->
+<header class="guide-header">
+  <h1>AI Team Setup Guide</h1>
+  <p>Everything you need to get your machine ready for School of Bots</p>
+  <span class="version-badge">v2.0 — Updated March 2026</span>
+</header>
+
+<div class="container">
+
+<!-- ============================== TOC ============================== -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#prereqs">Pre-Requisites</a> <span class="toc-time">Check before scheduling</span></li>
+    <li><a href="#prework">Pre-Work (Admin Only)</a> <span class="toc-time">~20 min</span></li>
+    <li><a href="#phase1">Phase 1: Download & Open Cursor</a> <span class="toc-time">~3 min</span></li>
+    <li><a href="#phase2">Phase 2: Install Claude Code</a> <span class="toc-time">~5 min</span></li>
+    <li><a href="#phase3">Phase 3: Let Claude Do the Rest</a> <span class="toc-time">~15–25 min</span></li>
+    <li><a href="#phase4">Phase 4: Open the Project</a> <span class="toc-time">~2 min</span></li>
+    <li><a href="#phase5">Phase 5: API Keys & Connections</a> <span class="toc-time">~10–15 min</span></li>
+    <li><a href="#phase6">Phase 6: Slash Commands & Settings</a> <span class="toc-time">~3 min</span></li>
+    <li><a href="#phase7">Phase 7: Verify Everything Works</a> <span class="toc-time">~2 min</span></li>
+    <li><a href="#cheat-sheet">Claude Cheat Phrases</a></li>
+    <li><a href="#mcp-quirks">Known MCP Quirks</a></li>
+    <li><a href="#daily">Daily Workflow</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#handbook">AI System Handbook</a></li>
+  </ol>
+</nav>
+
+<!-- ============================== PRE-REQUISITES ============================== -->
+<section class="phase" id="prereqs">
+  <span class="phase-label">Before You Start</span>
+  <h2>Pre-Requisites</h2>
+  <p>Confirm these with your team member <strong>before scheduling the setup call</strong>:</p>
+
+  <table>
+    <tr><th>Requirement</th><th>How to Check</th><th>Minimum</th></tr>
+    <tr>
+      <td><strong>Mac computer</strong></td>
+      <td>Windows is not supported yet</td>
+      <td>macOS required</td>
+    </tr>
+    <tr>
+      <td><strong>Free disk space</strong></td>
+      <td>Apple menu &rarr; About This Mac &rarr; Storage</td>
+      <td><strong>15 GB free minimum</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Computer model</strong></td>
+      <td>Apple menu &rarr; About This Mac</td>
+      <td>M1 chip or newer recommended</td>
+    </tr>
+    <tr>
+      <td><strong>RAM</strong></td>
+      <td>Apple menu &rarr; About This Mac</td>
+      <td>8 GB minimum, 16 GB recommended</td>
+    </tr>
+    <tr>
+      <td><strong>macOS version</strong></td>
+      <td>Apple menu &rarr; About This Mac</td>
+      <td>Up to date recommended</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-warning">
+    <h4>Why this matters</h4>
+    <p>Low disk space = dramatically slower install times. During Linnea's onboarding, the install that normally takes 7–10 minutes took 25+ minutes because her disk was nearly full. If your team member has less than 15 GB free, have them offload files to an external drive or cloud storage <strong>before</strong> the setup call.</p>
+  </div>
+
+  <p><strong>Before the call, ask your team member to:</strong></p>
+  <ul>
+    <li>Close all unnecessary applications (browsers with lots of tabs, Spotify, etc.)</li>
+    <li>Have their Mac password ready (they'll need to type it during setup)</li>
+    <li>Accept any pending GitHub and Claude Console invites from their email</li>
+  </ul>
+</section>
+
+<!-- ============================== PRE-WORK ============================== -->
+<section class="phase" id="prework">
+  <span class="phase-label admin">Admin Only</span>
+  <h2>Pre-Work (Admin Only) — ~20 min</h2>
+  <p>Complete all of these <strong>before</strong> scheduling the setup call.</p>
+
+  <h3>A. Get GitHub Username</h3>
+  <p>Request their existing username, or have them create an account at <code>github.com</code>.</p>
+
+  <h3>B. Add Org Seat</h3>
+  <p>Verify an available seat at <code>github.com/orgs/School-of-Bots/people</code>. Add one under Settings &rarr; Billing if needed.</p>
+
+  <h3>C. Invite to GitHub Repo</h3>
+  <p>Use <code>/add-github-member [username]</code> or manually invite at the org people page with <strong>Member</strong> role.</p>
+
+  <h3>D. Invite to Claude Console</h3>
+  <p>Send an org invite at <code>console.anthropic.com/settings/members</code> using their work email.</p>
+
+  <div class="callout callout-danger">
+    <h4>CRITICAL: Enable Claude Code Access</h4>
+    <p>After inviting them, go to <strong>console.anthropic.com</strong> &rarr; click on the user's name &rarr; under permissions, enable <strong>"Use Workbench and Claude Code"</strong> (not just "Use Workbench").</p>
+    <p>Without this, Claude Code will fail to authenticate and you'll waste 10+ minutes troubleshooting on the call.</p>
+  </div>
+
+  <h3>E. Invite to Cursor Team</h3>
+  <p>Add via Cursor team settings with their work email.</p>
+
+  <h3>F. Generate API Keys</h3>
+  <table>
+    <tr><th>Key</th><th>Where</th><th>Details</th></tr>
+    <tr>
+      <td>Anthropic</td>
+      <td><code>console.anthropic.com/settings/keys</code></td>
+      <td>Name format: <code>[name]-sob-dfy</code>. Copy immediately — you can't see it again.</td>
+    </tr>
+    <tr>
+      <td>Airtable</td>
+      <td><code>airtable.com/create/tokens</code></td>
+      <td>Add <code>data.records:read</code> scope. Grant access to the Accounts base.</td>
+    </tr>
+  </table>
+
+  <h3>G. Send "You're Ready" Message</h3>
+  <p>DM the team member with:</p>
+  <ul>
+    <li>Both API keys (via DM only — delete after setup)</li>
+    <li>Link to this guide</li>
+    <li>Reminder to accept GitHub + Claude invites before the call</li>
+    <li>Reminder to check their free disk space</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <h4>Security</h4>
+    <p>API keys sent via DM should be <strong>deleted from the chat after setup is complete</strong>. Never share keys in public channels or commit them to GitHub.</p>
+  </div>
+</section>
+
+<!-- ============================== PHASE 1 ============================== -->
+<section class="phase" id="phase1">
+  <span class="phase-label">Phase 1</span>
+  <h2>Download, Open & Sign In to Cursor — ~3 min</h2>
+
+  <h3>Step 1 — Download & Install</h3>
+  <ol>
+    <li>Visit <code>cursor.com</code> in your browser</li>
+    <li>Click <strong>Download</strong> (auto-detects Mac)</li>
+    <li>Open the <code>.dmg</code> file from Downloads</li>
+    <li>Drag the Cursor icon to your Applications folder</li>
+    <li>Wait for the copy to finish</li>
+  </ol>
+
+  <h3>Step 2 — Open Cursor</h3>
+  <ol>
+    <li>Open Finder &rarr; Applications</li>
+    <li>Double-click <strong>Cursor</strong></li>
+    <li>If macOS shows a security prompt, click <strong>Open</strong></li>
+    <li>Skip any tutorials that pop up</li>
+  </ol>
+
+  <div class="callout callout-info">
+    <h4>If macOS blocks the app</h4>
+    <p>Go to System Settings &rarr; Privacy &amp; Security &rarr; scroll down and click <strong>"Open Anyway"</strong>.</p>
+  </div>
+
+  <h3>Step 3 — Sign In with Team Account</h3>
+  <ol>
+    <li>Click <strong>Login</strong> when prompted</li>
+    <li>Enter the team Cursor credentials</li>
+    <li>Confirm login</li>
+  </ol>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 1 when:</strong> You see the Cursor app open with a welcome screen or empty editor. You do <em>not</em> need to create a new project yet.
+  </div>
+</section>
+
+<!-- ============================== PHASE 2 ============================== -->
+<section class="phase" id="phase2">
+  <span class="phase-label">Phase 2</span>
+  <h2>Install Claude Code — ~5 min</h2>
+
+  <h3>Step 1 — Open the Extensions Panel</h3>
+  <p>Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd></p>
+
+  <h3>Step 2 — Search and Install</h3>
+  <ol>
+    <li>Search for <strong>"Claude Code"</strong></li>
+    <li>Click <strong>Install</strong></li>
+    <li>Wait for it to finish</li>
+  </ol>
+
+  <h3>Step 3 — Open Claude Code</h3>
+  <ol>
+    <li>Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the Command Palette</li>
+    <li>Type <strong>"Claude Code: Open"</strong></li>
+    <li>Select it from the list</li>
+  </ol>
+
+  <h3>Step 4 — Authenticate</h3>
+  <p>Claude Code will show a login screen with several options:</p>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/01-claude-code-api-auth.png" alt="Claude Code authentication screen showing subscription options">
+    <div class="caption">The Claude Code authentication screen. Choose "Anthropic Console".</div>
+  </div>
+
+  <ol>
+    <li>Click <strong>"Anthropic Console"</strong> (the second option)</li>
+    <li>It will open your browser — sign in with your team Claude account</li>
+    <li>If it asks for an authorization code or API key, paste the <strong>Anthropic API key</strong> your admin sent you</li>
+  </ol>
+
+  <div class="callout callout-danger">
+    <h4>If authentication fails</h4>
+    <p>This usually means your admin hasn't enabled "Use Workbench and Claude Code" for your account in the Claude Console. <strong>Tell your admin</strong> — they need to update your org permissions. This is not something you can fix yourself.</p>
+  </div>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 2 when:</strong> You see the Claude Code chat panel with a text input that says "Ask Claude to edit..." and a small pixel-art character. It should look like this:
+  </div>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/02-terminal-install-running.png" alt="Claude Code ready state showing the chat panel">
+    <div class="caption">Claude Code is ready. This is where you'll paste the setup prompt in the next phase.</div>
+  </div>
+</section>
+
+<!-- ============================== PHASE 3 ============================== -->
+<section class="phase" id="phase3">
+  <span class="phase-label">Phase 3</span>
+  <h2>Let Claude Do the Rest — ~15–25 min</h2>
+
+  <div class="callout callout-timing">
+    <h4>What to Expect</h4>
+    <p>This is the longest phase. After you paste the prompt below and hit Enter:</p>
+    <ul>
+      <li><strong>It will take 7–25 minutes</strong> depending on your internet speed and computer specs</li>
+      <li><strong>You will see terminal output scrolling</strong> at the bottom of the screen — this is normal</li>
+      <li><strong>It may look frozen</strong> at times — if text is slowly appearing in the terminal panel, it's still working</li>
+      <li><strong>The longest single step</strong> is downloading Xcode Command Line Tools — this alone can take 5–10 minutes</li>
+      <li><strong>You will need to type your Mac password</strong> at one point (nothing shows as you type — that's normal)</li>
+      <li><strong>Click "Yes" or "Allow"</strong> for any permission prompts that pop up</li>
+    </ul>
+  </div>
+
+  <p>Copy and paste this entire prompt into the Claude Code chat panel:</p>
+
+  <div class="prompt-block">
+    <span class="copy-label">Copy this prompt</span>
+I'm a new team member setting up my machine for the first time. I need you to do the following — handle each step and confirm when it's done before moving to the next:
+
+1. Install Homebrew (if not already installed)
+2. Install Git and GitHub CLI using Homebrew
+3. Install Node.js using Homebrew
+4. Verify all three are installed by checking versions
+5. Authenticate with GitHub using: gh auth login (use SSH, generate new SSH key, login via web browser)
+6. Clone team repo: git clone git@github.com:School-of-Bots/done-for-you-division.git ~/Documents/SOB-DFY
+7. Set Git identity — ask for my name and email before running the commands
+8. Confirm repo cloned successfully by listing contents of ~/Documents/SOB-DFY
+
+Do each step one at a time. Tell me if anything needs my input. After EACH step is complete, say "Step X complete" clearly so I know we're moving forward.
+
+When ALL 8 steps are done, say: "ALL DONE — Setup is complete. All 8 steps finished successfully." and list the final versions of everything installed.
+  </div>
+
+  <h3>What It Looks Like While Running</h3>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/03-homebrew-downloading.png" alt="Claude running Homebrew installation in Cursor">
+    <div class="caption">Claude installing Homebrew. You'll see terminal output scrolling at the bottom — this is normal.</div>
+  </div>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/05-nothing-happens-after-send.png" alt="Claude showing Xcode Command Line Tools downloading">
+    <div class="caption">The "slow part" — Xcode Command Line Tools downloading. This step alone can take 5–10 minutes. If you see "Downloading" or "Installing Command Line Tools" in the terminal, it's still working.</div>
+  </div>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/07-long-wait-phase.png" alt="Terminal showing Command Line Tools download progress">
+    <div class="caption">The terminal will show download progress. Don't close anything — just wait.</div>
+  </div>
+
+  <h3>How to Know It's Done</h3>
+  <p>Claude will say <strong>"ALL DONE — Setup is complete"</strong> and list the installed versions. If you're not sure, see the "Is it done?" section below.</p>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/08-still-going.png" alt="Claude showing Step 1 complete, moving to Step 2">
+    <div class="caption">This is what progress looks like — Claude clearly says "Step 1 complete" before moving on.</div>
+  </div>
+
+  <h3>"Is it done?" — How to Check</h3>
+
+  <div class="screenshot">
+    <img src="onboarding-screenshots/06-storage-discussion.png" alt="Claude showing task still running with Is it done yet? question">
+    <div class="caption">It's okay to ask "Is it done yet?" — Claude will tell you what's still running.</div>
+  </div>
+
+  <div class="callout callout-warning">
+    <h4>Sometimes Claude gets confused about its own progress</h4>
+    <p>This actually happened during onboarding — Claude sometimes says "not done" when it actually is, or vice versa. If Claude seems confused or stuck, use these messages:</p>
+  </div>
+
+  <table>
+    <tr><th>If this happens...</th><th>Say this to Claude</th></tr>
+    <tr>
+      <td>Not sure if it's done</td>
+      <td><code>Are all 8 steps complete? List which ones are done and which are still pending.</code></td>
+    </tr>
+    <tr>
+      <td>Claude says not done but nothing is happening</td>
+      <td><code>Check the terminal output. Did the last command finish? What step are we actually on?</code></td>
+    </tr>
+    <tr>
+      <td>You want to verify yourself</td>
+      <td><code>Run this and show me the output: brew --version && git --version && gh --version && node --version && ls ~/Documents/SOB-DFY</code></td>
+    </tr>
+    <tr>
+      <td>Claude is going in circles</td>
+      <td><code>Stop. Let's verify what's actually installed. Run the version checks and show me.</code></td>
+    </tr>
+  </table>
+
+  <p>When Claude needs your <strong>Mac password</strong>: type it in the terminal area at the bottom. Nothing will appear on screen as you type — this is normal macOS behavior. Just type it and press Enter.</p>
+
+  <p>When Claude asks for <strong>GitHub browser login</strong>: it will open your browser. Sign in, authorize, and come back to Cursor.</p>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 3 when:</strong> Claude says "ALL DONE" and you can see the SOB-DFY folder contents listed. If unsure, ask Claude: <code>"Is setup complete? Show me the contents of ~/Documents/SOB-DFY"</code>
+  </div>
+</section>
+
+<!-- ============================== PHASE 4 ============================== -->
+<section class="phase" id="phase4">
+  <span class="phase-label">Phase 4</span>
+  <h2>Open the Project — ~2 min</h2>
+
+  <ol>
+    <li>Click <strong>File</strong> in the Mac menu bar (top of your screen, not inside the Cursor window)</li>
+    <li>Click <strong>Open Folder</strong></li>
+    <li>Navigate to <strong>Documents &rarr; SOB-DFY</strong></li>
+    <li>Click <strong>Open</strong> in the bottom-right corner</li>
+    <li>If prompted "Do you trust the authors?" &rarr; click <strong>Yes, I trust the authors</strong></li>
+  </ol>
+
+  <div class="callout callout-info">
+    <h4>This is your permanent workspace</h4>
+    <p>This becomes your daily Cursor project. Open it every morning. <strong>Never move or rename the SOB-DFY folder.</strong></p>
+  </div>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 4 when:</strong> The file explorer on the left shows folders like <code>context-library</code>, <code>skills</code>, and <code>commands</code>.
+  </div>
+</section>
+
+<!-- ============================== PHASE 5 ============================== -->
+<section class="phase" id="phase5">
+  <span class="phase-label">Phase 5</span>
+  <h2>API Keys & Connections — ~10–15 min</h2>
+
+  <div class="callout callout-timing">
+    <h4>Realistic timing</h4>
+    <p>This phase involves MCP server setup which sometimes needs troubleshooting. Budget 10–15 minutes, not 5.</p>
+  </div>
+
+  <h3>API Keys & Environment</h3>
+  <p>Your admin will provide this prompt with the keys already filled in. Copy into Claude Code:</p>
+
+  <div class="prompt-block">
+    <span class="copy-label">Admin fills in keys first</span>
+I need you to set up my API keys and MCP connections. Here are my keys:
+
+ANTHROPIC_API_KEY: [admin pastes key]
+AIRTABLE_API_KEY: [admin pastes key]
+
+Please:
+1. Add both keys to ~/.zshrc as exports
+2. Source the file so they take effect
+3. Verify both keys are set by echoing them
+4. Create ~/.claude/mcp.json with MCP servers:
+   - context7: npx -y @upstash/context7-mcp
+   - notion: http type, url https://mcp.notion.com/mcp
+5. Confirm mcp.json was created correctly
+
+After EACH step, confirm it worked before moving on. When done, say "API keys and MCP servers configured."
+  </div>
+
+  <h3>Airtable Custom Integration</h3>
+  <p>The standard Airtable MCP often fails to install correctly. Use our team's custom setup instead:</p>
+
+  <div class="callout callout-info">
+    <h4>Why not the Airtable MCP?</h4>
+    <p>The <code>airtable-mcp-server</code> package frequently reports as "not installed correctly" even when it is. We've built a custom integration that works reliably. Your admin will walk you through this step or provide the snippet.</p>
+  </div>
+
+  <h3>Full Connection List</h3>
+
+  <table>
+    <tr><th>Connection</th><th>Purpose</th><th>Status</th></tr>
+    <tr><td>Anthropic API</td><td>Powers Claude Code</td><td>Set up in this phase</td></tr>
+    <tr><td>Airtable</td><td>Client data, sprint tracking</td><td>Custom integration (admin sets up)</td></tr>
+    <tr><td>Context7 MCP</td><td>Documentation lookups</td><td>Set up in this phase</td></tr>
+    <tr><td>Notion MCP</td><td>Access Notion pages</td><td>Set up in this phase</td></tr>
+    <tr><td>Slack MCP</td><td>Read/send Slack messages</td><td>Optional — see <a href="#mcp-quirks">Known MCP Quirks</a></td></tr>
+    <tr><td>Figma Plugin</td><td>Design-to-code</td><td>Added in Phase 6</td></tr>
+    <tr><td>Stripe</td><td>Payment data</td><td>Only for billing team</td></tr>
+  </table>
+
+  <div class="callout callout-danger">
+    <h4>Security</h4>
+    <p>API keys are private. <strong>Never</strong> share in Slack channels, post publicly, or commit to GitHub. After setup, your admin should delete the DM containing the keys.</p>
+  </div>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 5 when:</strong> Running <code>echo $ANTHROPIC_API_KEY && echo $AIRTABLE_API_KEY</code> in the terminal prints both keys. If either prints nothing, tell Claude: <code>"My API key is not set. Help me add it to ~/.zshrc and source it."</code>
+  </div>
+</section>
+
+<!-- ============================== PHASE 6 ============================== -->
+<section class="phase" id="phase6">
+  <span class="phase-label">Phase 6</span>
+  <h2>Slash Commands & Settings — ~3 min</h2>
+
+  <p>Paste into Claude Code:</p>
+
+  <div class="prompt-block">
+    <span class="copy-label">Copy this prompt</span>
+Please:
+1. Copy all files from ~/Documents/SOB-DFY/.claude/commands/ to ~/.claude/commands/ (create directory if needed)
+2. List what was copied so I can confirm
+3. Create ~/.claude/settings.json with permissions and plugins:
+   - Allow: python3, pip, pip3, git, gh, curl, mkdir, cp, mv, rm, ls, node, npm, npx, brew
+   - Enable plugins: frontend-design, plugin-dev, feature-dev, github, code-review, figma, Notion, stripe, skill-creator (all @claude-plugins-official)
+4. Confirm both files were created
+
+Say "Commands and settings configured" when done.
+  </div>
+
+  <div class="done-signal">
+    <strong>You're done with Phase 6 when:</strong> Claude confirms both files were created. You can verify with <code>ls ~/.claude/commands/</code> — you should see a list of command files.
+  </div>
+</section>
+
+<!-- ============================== PHASE 7 ============================== -->
+<section class="phase" id="phase7">
+  <span class="phase-label">Phase 7</span>
+  <h2>Verify Everything Works — ~2 min</h2>
+
+  <h3>Check Git</h3>
+  <p>Open Terminal (<kbd>Ctrl</kbd> + <kbd>`</kbd>) and run:</p>
+  <pre><code>cd ~/Documents/SOB-DFY && git status</code></pre>
+  <p><strong>Expected:</strong> "On branch main" and "nothing to commit, working tree clean"</p>
+
+  <h3>Check API Keys</h3>
+  <pre><code>echo $ANTHROPIC_API_KEY && echo $AIRTABLE_API_KEY</code></pre>
+  <p><strong>Expected:</strong> Both commands print your keys. If either prints nothing, tell Claude: <code>"My API key is not set. Help me add it to ~/.zshrc."</code></p>
+
+  <h3>Test Claude Code</h3>
+  <p>In the Claude Code chat, type:</p>
+  <pre><code>What files are in this project?</code></pre>
+  <p><strong>Expected:</strong> Claude lists folders like <code>context-library</code>, <code>skills</code>, <code>dm-funnel-playbooks</code>, etc.</p>
+
+  <h3>Test a Slash Command</h3>
+  <p>Run your role's starter command with a real client name (your lead will tell you which one).</p>
+
+  <div class="callout callout-info">
+    <h4>If a command isn't recognized</h4>
+    <p>Run <code>ls ~/.claude/commands/</code> to confirm files exist. If empty, go back to Phase 6. If files are there, restart Cursor (<kbd>Cmd</kbd> + <kbd>Q</kbd>, then reopen).</p>
+  </div>
+
+  <div class="done-signal">
+    <strong>Setup is complete!</strong> You're ready to start using the system. Continue to the Daily Workflow section below, and refer to the Claude Cheat Phrases whenever you get stuck.
+  </div>
+</section>
+
+<!-- ============================== CHEAT SHEET ============================== -->
+<section class="phase" id="cheat-sheet">
+  <h2>Claude Cheat Phrases — Use When Stuck</h2>
+  <p>These phrases work in almost any situation where Claude seems stuck, confused, or unresponsive. Keep this page bookmarked.</p>
+
+  <div class="cheat-sheet">
+    <h3>Universal Rescue Phrases</h3>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Don't know if it's done</div>
+      <div class="cheat-say">"Are all steps complete? List which ones are done and which are still pending."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Nothing is happening</div>
+      <div class="cheat-say">"Check the terminal. Is a command still running? What step are we on?"</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Claude says it can't do something</div>
+      <div class="cheat-say">"Try doing it in the terminal. Run the command directly."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Claude seems confused or looping</div>
+      <div class="cheat-say">"Stop. Let's verify what's actually done. Run the version checks and show me."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Error you don't understand</div>
+      <div class="cheat-say">"Explain this error in plain English and tell me exactly what to do next."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Taking way too long</div>
+      <div class="cheat-say">"Is something still downloading? Check if the process is still active."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Want to start over on one step</div>
+      <div class="cheat-say">"Start over from step [X]. Don't redo the earlier steps."</div>
+    </div>
+
+    <div class="cheat-phrase">
+      <div class="cheat-situation">Totally lost</div>
+      <div class="cheat-say">Start a <strong>new chat</strong> (Cmd+L) and paste the prompt again. Fresh start.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== MCP QUIRKS ============================== -->
+<section class="phase" id="mcp-quirks">
+  <h2>Known MCP Quirks</h2>
+  <p>MCPs (Model Context Protocol servers) connect Claude to external tools. Some are finicky. Here's what we've learned:</p>
+
+  <h3>Airtable</h3>
+  <div class="callout callout-warning">
+    <p>The standard <code>airtable-mcp-server</code> install frequently fails or reports as "not installed correctly." <strong>Use our team's custom integration instead</strong> — your admin will set this up during onboarding. The team helper script is at <code>scripts/airtable.sh</code> in the repo.</p>
+    <p><strong>To test if Airtable is working:</strong></p>
+    <pre><code>curl -s -H "Authorization: Bearer $AIRTABLE_API_KEY" \
+  "https://api.airtable.com/v0/app0MXWD2LKazuQo1/Team" | head -c 200</code></pre>
+    <p>If you see JSON data, it's working. If you see <code>AUTHENTICATION_REQUIRED</code>, your token is wrong or expired.</p>
+  </div>
+
+  <h3>Slack MCP</h3>
+  <div class="callout callout-warning">
+    <p>Slack MCP requires OAuth setup — it's <strong>not just an API key</strong>. It can be flaky:</p>
+    <ul>
+      <li>It sometimes says "not connected" even when it's working</li>
+      <li>The connection can drop and need re-authentication</li>
+      <li><strong>Workaround:</strong> Claude can access Slack messages through the Notion MCP instead</li>
+    </ul>
+    <p><strong>Don't spend more than 10 minutes troubleshooting Slack MCP during initial setup.</strong> Move on and come back to it later. It's not required for day-one work.</p>
+  </div>
+
+  <h3>Context7</h3>
+  <p>Generally reliable. If it fails, run <code>npx -y @upstash/context7-mcp</code> in the terminal to verify it installs.</p>
+
+  <h3>Notion</h3>
+  <p>Uses HTTP connection type. Usually works on first try. If it doesn't connect, verify the URL is exactly: <code>https://mcp.notion.com/mcp</code></p>
+</section>
+
+<!-- ============================== DAILY WORKFLOW ============================== -->
+<section class="phase" id="daily">
+  <h2>Daily Workflow Reference</h2>
+
+  <h3>Every Morning</h3>
+  <ol>
+    <li>Open Cursor &rarr; SOB-DFY project</li>
+    <li>Check bottom-left corner — branch must say <strong>main</strong>. If not, click it and select main.</li>
+    <li>Open Terminal (<kbd>Ctrl</kbd> + <kbd>`</kbd>) and run: <code>git pull origin main</code></li>
+    <li>Create today's branch: click branch name &rarr; Create new branch &rarr; name it <code>yourname-MM-DD-YY</code></li>
+  </ol>
+
+  <h3>During the Day</h3>
+  <p>Work normally in Cursor. Run slash commands. Save with <kbd>Cmd</kbd> + <kbd>S</kbd>. No Git steps needed mid-day.</p>
+
+  <h3>Every Evening</h3>
+  <ol>
+    <li>Click <strong>View &rarr; Source Control</strong></li>
+    <li>Hover over <strong>Changes</strong> &rarr; click the <strong>+</strong> icon to stage</li>
+    <li>Write a clear commit message (e.g., "yourname 03-11-26 — updated client context files")</li>
+    <li>Click the <strong>Commit</strong> button (checkmark icon)</li>
+    <li>Click <strong>Publish Branch</strong> (first time) or <strong>Sync Changes</strong></li>
+    <li>In Terminal, run: <code>gh pr create --fill</code></li>
+  </ol>
+
+  <p><strong>Expected:</strong> You see a URL like <code>https://github.com/School-of-Bots/.../pull/XX</code></p>
+  <p>Leadership reviews all PRs before 9 AM EST. When you pull main the next morning, approved changes are merged.</p>
+</section>
+
+<!-- ============================== TROUBLESHOOTING ============================== -->
+<section class="phase" id="troubleshooting">
+  <h2>Troubleshooting</h2>
+
+  <table>
+    <tr><th>Problem</th><th>Fix</th></tr>
+    <tr>
+      <td><strong>"Permission denied (publickey)"</strong></td>
+      <td>Run <code>gh auth login</code> again, choose SSH. If it persists, ask Claude Code for SSH setup help.</td>
+    </tr>
+    <tr>
+      <td><strong>"brew: command not found"</strong></td>
+      <td>Close Terminal completely (<kbd>Cmd</kbd> + <kbd>Q</kbd>), reopen, try <code>brew --version</code>. If still missing, ask Claude to install Homebrew.</td>
+    </tr>
+    <tr>
+      <td><strong>Claude Code doesn't open</strong></td>
+      <td>Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>, search "Claude Code", install if missing. Make sure you're signed into the team Cursor account. Restart Cursor.</td>
+    </tr>
+    <tr>
+      <td><strong>Claude Code auth fails</strong></td>
+      <td>Your admin needs to enable "Use Workbench and Claude Code" in the Claude Console org settings for your account. This is an admin fix, not yours.</td>
+    </tr>
+    <tr>
+      <td><strong>API key returns nothing</strong></td>
+      <td>Tell Claude: <code>"My ANTHROPIC_API_KEY is not set. Help me add it to ~/.zshrc and source it."</code> Have your key ready to paste.</td>
+    </tr>
+    <tr>
+      <td><strong>Slash command not found</strong></td>
+      <td>Run <code>ls ~/.claude/commands/</code>. If empty, go back to Phase 6. If files are there, restart Cursor.</td>
+    </tr>
+    <tr>
+      <td><strong>"gh pr create" gives error</strong></td>
+      <td>Make sure you pushed your branch first. If "No commits," commit first. If "already exists," you already opened a PR today — you're done.</td>
+    </tr>
+    <tr>
+      <td><strong>Terminal password invisible</strong></td>
+      <td>Normal. When macOS asks for your password in Terminal, nothing displays as you type. Type your password and press Enter.</td>
+    </tr>
+    <tr>
+      <td><strong>Install is extremely slow (25+ min)</strong></td>
+      <td>Check free disk space: Apple menu &rarr; About This Mac &rarr; Storage. If under 15 GB free, close apps and clear space. Low storage = slow installs.</td>
+    </tr>
+    <tr>
+      <td><strong>Accidentally deleted a file</strong></td>
+      <td>Tell your lead. Git preserves full history — the file can be recovered.</td>
+    </tr>
+    <tr>
+      <td><strong>Airtable MCP "not installed correctly"</strong></td>
+      <td>This is a known issue. Don't keep retrying. Use the team's custom Airtable integration instead (see <a href="#mcp-quirks">Known MCP Quirks</a>).</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ============================== KEYBOARD SHORTCUTS ============================== -->
+<section class="phase">
+  <h2>Keyboard Shortcuts</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td><td>Command Palette</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd></td><td>Extensions</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>I</kbd></td><td>Claude Code Chat</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>B</kbd></td><td>File Explorer</td></tr>
+    <tr><td><kbd>Ctrl</kbd> + <kbd>`</kbd></td><td>Terminal</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>S</kbd></td><td>Save</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>P</kbd></td><td>Quick Open File</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>L</kbd></td><td>New Chat (fresh start)</td></tr>
+    <tr><td><kbd>Cmd</kbd> + <kbd>Q</kbd></td><td>Quit / Restart</td></tr>
+  </table>
+</section>
+
+<!-- ============================== HANDBOOK ============================== -->
+<section class="phase" id="handbook">
+  <h2>AI System Handbook</h2>
+
+  <h3>The Big Picture</h3>
+  <p><strong>What's Happening:</strong> School of Bots has built an AI agent system that automates repeatable work across all roles. Your job is evolving from task execution to quality control and client strategy using pre-built AI skills.</p>
+
+  <p><strong>The One Rule:</strong> "Skills are process. Context is knowledge. Keep them separate."</p>
+  <p>Skills instruct HOW to do tasks (universal across clients). Context provides WHO it's for (client-specific). One skill + client context = scalable system.</p>
+
+  <h3>Three Layers</h3>
+  <ol>
+    <li><strong>Skill File</strong> — Instructions (leadership maintains)</li>
+    <li><strong>Client Context</strong> — Client-specific info (GS + CW populate)</li>
+    <li><strong>Airtable</strong> — Live client data (Natasha/Anissa maintain)</li>
+  </ol>
+
+  <h3>Four Build Layers</h3>
+  <ol>
+    <li><strong>Layer 4: Human SOPs</strong> — How the team uses commands</li>
+    <li><strong>Layer 3: AI Skills + Slash Commands</strong> — Pre-built by leadership</li>
+    <li><strong>Layer 2: Frameworks</strong> — Repeatable structures and playbooks</li>
+    <li><strong>Layer 1: Context Library</strong> — Business knowledge and brand guides</li>
+  </ol>
+  <p>You live in Layer 4. Leadership handles Layers 1–3.</p>
+
+  <h3>System Evolution</h3>
+  <ul>
+    <li><strong>Skills</strong> — One skill, manual invocation</li>
+    <li><strong>Workflows</strong> — Multiple skills chained in sequence</li>
+    <li><strong>Agents</strong> — Orchestrators deciding which skills/workflows to run</li>
+    <li><strong>Scheduled Runs</strong> — Scripts running on schedule, looping through clients</li>
+  </ul>
+  <p>Currently in Skills + Workflows stage. Human review always required.</p>
+
+  <h3>Your Toolbox</h3>
+  <table>
+    <tr><th>Tool</th><th>What It Is</th></tr>
+    <tr><td><strong>Claude.ai</strong></td><td>Brainstorming partner — use separately from working files</td></tr>
+    <tr><td><strong>Cursor</strong></td><td>Your command center and daily workspace</td></tr>
+    <tr><td><strong>GitHub</strong></td><td>Cloud file storage — all team files version-tracked here</td></tr>
+    <tr><td><strong>Obsidian</strong></td><td>Company knowledge and brand voice docs syncing to GitHub</td></tr>
+  </table>
+
+  <h3>Key Terms</h3>
+  <table>
+    <tr><th>Term</th><th>What It Means</th></tr>
+    <tr><td>Repository (repo)</td><td>Shared project folder on GitHub</td></tr>
+    <tr><td>Commit</td><td>Saving a snapshot with a label</td></tr>
+    <tr><td>Push</td><td>Uploading commits to GitHub</td></tr>
+    <tr><td>Pull</td><td>Downloading latest changes from GitHub</td></tr>
+    <tr><td>Branch</td><td>Your personal working copy — stays separate until reviewed</td></tr>
+    <tr><td>Pull Request (PR)</td><td>Proposal to merge changes — reviewed before 9 AM</td></tr>
+    <tr><td>Slash command</td><td>Shortcut that invokes a skill (e.g., <code>/gs-monday [client-name]</code>)</td></tr>
+    <tr><td>MCP</td><td>Connector that plugs Claude into other tools</td></tr>
+  </table>
+</section>
+
+<!-- ============================== SKILL NAMING ============================== -->
+<section class="phase">
+  <h2>Skill Naming Convention</h2>
+  <p>Skills are named by what they do, not which client. Most include a cadence prefix:</p>
+  <table>
+    <tr><th>Prefix</th><th>Meaning</th></tr>
+    <tr><td><code>onboarding-</code></td><td>Used during client onboarding</td></tr>
+    <tr><td><code>daily-</code></td><td>Part of daily rhythm</td></tr>
+    <tr><td><code>weekly-</code></td><td>Part of weekly rhythm</td></tr>
+    <tr><td><code>biweekly-</code></td><td>Runs every two weeks</td></tr>
+    <tr><td><code>monthly-</code></td><td>Part of monthly rhythm</td></tr>
+    <tr><td><code>od-</code></td><td>On-demand — run whenever needed</td></tr>
+  </table>
+  <p>No client names in skill names — the client is specified when you invoke the command.</p>
+</section>
+
+<!-- ============================== ROLES ============================== -->
+<section class="phase">
+  <h2>Role Skill Categories</h2>
+
+  <h4>Growth Strategist</h4>
+  <p>Daily performance tracking, client health, funnel strategy, content direction, revenue analysis</p>
+
+  <h4>Copywriter</h4>
+  <p>Voice matching, DM funnel copy, social captions, story schedules, email sequences</p>
+
+  <h4>Client Ops Lead</h4>
+  <p>Client communication, approval tracking, onboarding coordination, daily reporting</p>
+
+  <h4>Automation Specialist</h4>
+  <p>Build specs, ManyChat audits, funnel documentation</p>
+
+  <p>Full command list: Open <code>slash-command-library.md</code> in Cursor (<kbd>Cmd</kbd> + <kbd>P</kbd> &rarr; search "slash-command").</p>
+</section>
+
+<!-- ============================== HOW COMMANDS WORK ============================== -->
+<section class="phase">
+  <h2>How Slash Commands Work</h2>
+  <ol>
+    <li>Open Cursor with the SOB-DFY project</li>
+    <li>Open Claude Code (<kbd>Cmd</kbd> + <kbd>I</kbd>)</li>
+    <li>Type your slash command with a client name: <code>/[role]-[command] [client-name]</code></li>
+    <li>Claude loads the skill, pulls client data from Airtable, and generates output</li>
+    <li>You review — if good, act on it. If not, give Claude feedback to adjust.</li>
+  </ol>
+</section>
+
+<!-- ============================== PROMPTING TIPS ============================== -->
+<section class="phase">
+  <h2>Prompting Tips</h2>
+
+  <p><strong>Old way:</strong> Dump everything &rarr; confused output &rarr; restart.</p>
+  <p><strong>New way:</strong> Give context in pieces &rarr; confirm understanding &rarr; next step together &rarr; iterate.</p>
+
+  <div class="callout callout-info">
+    <h4>The Magic Phrase</h4>
+    <p><strong>"Before you do that, come back to me with your plan first."</strong></p>
+  </div>
+
+  <ul>
+    <li><strong>One task per conversation</strong> — start a fresh chat for each topic</li>
+    <li><strong>Be a manager, not a suggester</strong> — say "Write 3-hook DM sequence" not "Can you help me think of ideas?"</li>
+    <li><strong>Give context first</strong>, confirm understanding, then instruct</li>
+    <li><strong>Iterate, don't restart</strong> — if it's 70% right, tell Claude what to fix</li>
+    <li><strong>Plan in Claude.ai, build in Cursor</strong> — brainstorm separately from working files</li>
+  </ul>
+</section>
+
+<!-- ============================== TESTING & FEEDBACK ============================== -->
+<section class="phase">
+  <h2>Testing & Feedback</h2>
+  <ul>
+    <li>Run each skill at least <strong>2 times on 2 different clients</strong></li>
+    <li>Fill the feedback form after each run (5 questions, 3 min)</li>
+    <li>Nothing reaches a client without leadership review</li>
+    <li>Production-ready = 4/5 average score, no "No" on Q1 or Q5</li>
+    <li>Use <code>/feature-request</code> for improvements or new skill ideas</li>
+  </ul>
+</section>
+
+<!-- ============================== SAFETY ============================== -->
+<section class="phase">
+  <h2>Safety Guidelines</h2>
+
+  <table>
+    <tr><th>Safe</th><th>Not Safe Yet</th></tr>
+    <tr><td>Slash commands</td><td>Mac Mini deployments</td></tr>
+    <tr><td>Built-in skills</td><td>Random internet skills</td></tr>
+    <tr><td>Approved MCPs</td><td>Autonomous agents</td></tr>
+    <tr><td>Leadership-built skills</td><td>PII in prompts</td></tr>
+    <tr><td></td><td>Unsupervised client communications</td></tr>
+  </table>
+</section>
+
+<!-- ============================== COMMON MISTAKES ============================== -->
+<section class="phase">
+  <h2>Common Mistakes to Avoid</h2>
+  <ul>
+    <li><strong>Don't dump too much context at once</strong> — one task per conversation</li>
+    <li><strong>Don't reuse the same chat forever</strong> — fresh chat per topic</li>
+    <li><strong>Don't build while brainstorming</strong> — plan in Claude.ai, build in Cursor</li>
+    <li><strong>Don't skip the morning pull</strong> — always <code>git pull origin main</code></li>
+    <li><strong>Don't write vague commits</strong> — use specific messages</li>
+    <li><strong>Don't edit skills directly</strong> — use <code>/feature-request</code></li>
+    <li><strong>Don't assume AI is right</strong> — review every output before acting on it</li>
+  </ul>
+</section>
+
+<!-- ============================== FIRST WEEK ============================== -->
+<section class="phase">
+  <h2>First Week Day-by-Day</h2>
+
+  <h4>Day 1</h4>
+  <p>Follow this Setup Guide. Get your environment working. That's the whole goal.</p>
+
+  <h4>Day 2</h4>
+  <p>Practice the morning/evening Git routine. Read <code>slash-command-library.md</code>. Get familiar with your role's commands.</p>
+
+  <h4>Days 3–4</h4>
+  <p>Run your starting commands on 2 clients. Fill the feedback form after each run.</p>
+
+  <h4>Day 5</h4>
+  <p>Debrief with your lead. Re-read this handbook. Ask questions.</p>
+</section>
+
+<!-- ============================== FAQ ============================== -->
+<section class="phase">
+  <h2>FAQ</h2>
+
+  <h4>Claude, Claude Code, Cursor — what's the difference?</h4>
+  <p>Brain, brain with hands, the office.</p>
+
+  <h4>I'm not a developer. Can I do this?</h4>
+  <p>Yes. You're running slash commands and reviewing outputs. The system is designed for non-developers.</p>
+
+  <h4>Do I build skills?</h4>
+  <p>Not now. Use <code>/feature-request</code> for ideas.</p>
+
+  <h4>Why not one skill per client?</h4>
+  <p>Maintenance nightmare. One skill + client context = scalable. That's the model.</p>
+
+  <h4>What if a skill gives bad output?</h4>
+  <p>Don't use it. Fill the feedback form. The skill gets updated. That's the testing cycle.</p>
+
+  <h4>How do I know which commands to use?</h4>
+  <p>Open <code>slash-command-library.md</code> in Cursor. Your lead also assigns starting commands during onboarding.</p>
+
+  <h4>What if the install takes longer than 25 minutes?</h4>
+  <p>Check your free disk space (Apple menu &rarr; About This Mac &rarr; Storage). If you're low on space, that's the bottleneck. Close unnecessary apps and clear space. If storage is fine and it's been 30+ minutes, start a fresh chat and paste the prompt again.</p>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer style="text-align: center; padding: 3rem 1rem; color: rgba(13,10,27,0.4); font-size: 0.85rem; border-top: 1px solid rgba(4,0,91,0.1); margin-top: 2rem;">
+  <p>School of Bots — AI Team Setup Guide v2.0</p>
+  <p>Last updated: March 2026</p>
+  <p>Questions? Ask your lead or tag @anissa in Slack.</p>
+</footer>
+
+</div><!-- /container -->
+
+</body>
+</html>
