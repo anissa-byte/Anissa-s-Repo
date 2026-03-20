@@ -444,6 +444,9 @@
     <li><a href="#daily">Daily Workflow</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a></li>
     <li><a href="#handbook">AI System Handbook</a></li>
+    <li><a href="#persistent-automation">Persistent Automation Setup</a></li>
+    <li><a href="#phase2-future">Phase 2 (Future) — Multi-Department</a></li>
+    <li><a href="#manual-pr">Manual Pull Request Code</a></li>
   </ol>
 </nav>
 
@@ -1277,6 +1280,137 @@ Say "Commands and settings configured" when done.
 
   <h4>What if the install takes longer than 25 minutes?</h4>
   <p>Check your free disk space (Apple menu &rarr; About This Mac &rarr; Storage). If you're low on space, that's the bottleneck. Close unnecessary apps and clear space. If storage is fine and it's been 30+ minutes, start a fresh chat and paste the prompt again.</p>
+</section>
+
+<!-- ============================== PERSISTENT AUTOMATION ============================== -->
+<section class="phase" id="persistent-automation">
+  <h2>Persistent Automation Setup</h2>
+
+  <p><strong>The /day-start and /day-end slash commands work inside Claude Code. For fully automatic daily runs (even when Claude Code is not open), follow these steps to set up persistent system-level scheduling on macOS.</strong></p>
+
+  <h3>Prerequisites Checklist</h3>
+  <ol>
+    <li>Git installed and on PATH &mdash; verify with: <code>which git</code></li>
+    <li>GitHub CLI (Command Line Interface) installed &mdash; verify with: <code>which gh</code></li>
+    <li>GitHub CLI (Command Line Interface) authenticated &mdash; verify with: <code>gh auth status</code></li>
+    <li>git config user.name is set globally &mdash; verify with: <code>git config --global user.name</code> (if empty, run: <code>git config --global user.name "Your Name"</code>)</li>
+    <li>Repository cloned locally &mdash; note the full path (for example: <code>/Users/yourname/Documents/SOB-DFY</code>)</li>
+    <li>Scripts are executable &mdash; run: <code>chmod +x scripts/day-start.sh scripts/day-end.sh</code> from the repo root</li>
+    <li>SSH (Secure Shell) key or HTTPS (Hypertext Transfer Protocol Secure) credential configured for GitHub &mdash; the script runs outside a terminal session, so interactive passwords fail silently</li>
+  </ol>
+
+  <h3>Step 1 &mdash; Create the morning job</h3>
+  <p>Save this file as <code>~/Library/LaunchAgents/com.sob.day-start.plist</code> &mdash; replace <code>FULL_PATH_TO_REPO</code> with the actual repo path on this machine (for example: <code>/Users/yourname/Documents/SOB-DFY</code>) and replace <code>YOUR_HOME_DIR</code> with the user's home directory (for example: <code>/Users/yourname</code>):</p>
+
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.sob.day-start&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;FULL_PATH_TO_REPO/scripts/day-start.sh&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;StartCalendarInterval&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Hour&lt;/key&gt;
+        &lt;integer&gt;8&lt;/integer&gt;
+        &lt;key&gt;Minute&lt;/key&gt;
+        &lt;integer&gt;0&lt;/integer&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;StandardOutPath&lt;/key&gt;
+    &lt;string&gt;/tmp/sob-day-start.log&lt;/string&gt;
+    &lt;key&gt;StandardErrorPath&lt;/key&gt;
+    &lt;string&gt;/tmp/sob-day-start-error.log&lt;/string&gt;
+    &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;PATH&lt;/key&gt;
+        &lt;string&gt;/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin&lt;/string&gt;
+        &lt;key&gt;HOME&lt;/key&gt;
+        &lt;string&gt;YOUR_HOME_DIR&lt;/string&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+
+  <h3>Step 2 &mdash; Create the evening job</h3>
+  <p>Save this file as <code>~/Library/LaunchAgents/com.sob.day-end.plist</code> &mdash; same substitutions as above:</p>
+
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.sob.day-end&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;FULL_PATH_TO_REPO/scripts/day-end.sh&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;StartCalendarInterval&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Hour&lt;/key&gt;
+        &lt;integer&gt;23&lt;/integer&gt;
+        &lt;key&gt;Minute&lt;/key&gt;
+        &lt;integer&gt;0&lt;/integer&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;StandardOutPath&lt;/key&gt;
+    &lt;string&gt;/tmp/sob-day-end.log&lt;/string&gt;
+    &lt;key&gt;StandardErrorPath&lt;/key&gt;
+    &lt;string&gt;/tmp/sob-day-end-error.log&lt;/string&gt;
+    &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;PATH&lt;/key&gt;
+        &lt;string&gt;/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin&lt;/string&gt;
+        &lt;key&gt;HOME&lt;/key&gt;
+        &lt;string&gt;YOUR_HOME_DIR&lt;/string&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+
+  <h3>Step 3 &mdash; Load the jobs</h3>
+  <pre><code>launchctl load ~/Library/LaunchAgents/com.sob.day-start.plist
+launchctl load ~/Library/LaunchAgents/com.sob.day-end.plist</code></pre>
+
+  <h3>Step 4 &mdash; Verify</h3>
+  <p>Confirm both jobs are loaded:</p>
+  <pre><code>launchctl list | grep sob</code></pre>
+  <p>You should see two lines &mdash; one for <code>com.sob.day-start</code> and one for <code>com.sob.day-end</code>. A dash (<code>-</code>) in the first column means the job has not fired yet. A <code>0</code> in the second column means the last run succeeded.</p>
+
+  <h3>Troubleshooting</h3>
+  <ul>
+    <li><strong>Jobs not firing:</strong> Check <code>/tmp/sob-day-start.log</code> and <code>/tmp/sob-day-start-error.log</code> (or the day-end equivalents) for errors.</li>
+    <li><strong>git or gh not found:</strong> The plist sets PATH to <code>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</code>. If your tools are installed elsewhere, update the PATH value in both plists.</li>
+    <li><strong>Permission denied:</strong> Run <code>chmod +x</code> on both scripts in the repo's <code>scripts/</code> folder.</li>
+    <li><strong>Push fails silently:</strong> launchd does not have access to interactive prompts. Ensure SSH (Secure Shell) keys or HTTPS (Hypertext Transfer Protocol Secure) credential storage is configured so <code>git push</code> works without a password prompt.</li>
+    <li><strong>To unload/stop the jobs:</strong></li>
+  </ul>
+  <pre><code>launchctl unload ~/Library/LaunchAgents/com.sob.day-start.plist
+launchctl unload ~/Library/LaunchAgents/com.sob.day-end.plist</code></pre>
+
+  <h3>Why the EnvironmentVariables block is required</h3>
+  <p>launchd runs jobs in a minimal shell environment with almost no PATH. Without the EnvironmentVariables block, <code>git</code>, <code>gh</code>, and other Homebrew-installed tools will not be found. The HOME variable is needed so git can locate <code>~/.gitconfig</code> and SSH (Secure Shell) can find <code>~/.ssh/</code>.</p>
+</section>
+
+<!-- ============================== PHASE 2 FUTURE ============================== -->
+<section class="phase" id="phase2-future">
+  <h2>Phase 2 (Future) &mdash; Multi-Department Process</h2>
+
+  <p>Switch to Phase 2 when any of the following is true:</p>
+  <ul>
+    <li>A second department needs access to the repository</li>
+    <li>A contractor or external contributor needs to make changes</li>
+    <li>Team size grows to the point where Natasha is approving more than 5&ndash;10 pull requests per day and it becomes a bottleneck</li>
+    <li>Departments need to work independently without seeing or interfering with each other's branches</li>
+  </ul>
+
+  <p>Phase 2 uses department forks with two-layer approval (department lead then organization admin). Details will be documented here when the switch happens.</p>
+</section>
+
+<!-- ============================== MANUAL PR ============================== -->
+<section class="phase" id="manual-pr">
+  <h2>Manual Pull Request Code</h2>
+  <p><strong>Run this in your terminal, not in Claude Code.</strong></p>
+  <pre><code>gh pr create --fill</code></pre>
 </section>
 
 <!-- ============================== FOOTER ============================== -->
