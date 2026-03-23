@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'l10-dashboard/**'
+      - '.github/workflows/deploy-l10-dashboard.yml'
     branches:
       - main
 
@@ -24,6 +25,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Inject config
+        run: |
+          cat > l10-dashboard/config.js << 'JSEOF'
+          const CONFIG = {
+            AIRTABLE_BASE: 'app0MXWD2LKazuQo1',
+            NOTES_TABLE: 'tbl2nBvnsJLnoNhHK',
+            ISSUES_TABLE: 'tbltJ7ROJhJ4TqzAQ',
+            AIRTABLE_TOKEN: '${{ secrets.AIRTABLE_TOKEN }}',
+            PASSWORD: 'EOS',
+          };
+          JSEOF
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
