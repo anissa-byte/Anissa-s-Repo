@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOB DFY — L10 Dashboard</title>
+<style>
+  :root {
+    --bg: #0f0f0f; --surface: #1a1a1a; --surface2: #242424;
+    --border: #333; --text: #e5e5e5; --text-muted: #888; --accent: #6366f1;
+    --green: #22c55e; --yellow: #eab308; --red: #ef4444;
+    --green-bg: rgba(34,197,94,0.1); --yellow-bg: rgba(234,179,8,0.1); --red-bg: rgba(239,68,68,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+
+  /* Password gate */
+  #password-gate { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:1000; flex-direction:column; gap:16px; }
+  #password-gate.hidden { display:none; }
+  #password-gate h2 { font-size:24px; font-weight:600; }
+  #password-gate input { padding:12px 20px; font-size:18px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text); text-align:center; width:240px; }
+  #password-gate input:focus { outline:none; border-color:var(--accent); }
+  #password-gate .error { color:var(--red); font-size:14px; min-height:20px; }
+
+  #dashboard { display:none; }
+  #dashboard.visible { display:block; }
+
+  /* Header */
+  .header { padding:20px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .header-left { display:flex; align-items:center; gap:24px; }
+  .header h1 { font-size:28px; font-weight:700; background:linear-gradient(135deg,#6366f1,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header .meta { color:var(--text-muted); font-size:14px; text-align:right; }
+  .header .week { font-size:18px; color:var(--text); font-weight:500; }
+
+  /* Meeting timer */
+  .timer { display:flex; align-items:center; gap:8px; padding:8px 16px; background:var(--surface); border-radius:8px; border:1px solid var(--border); }
+  .timer .time { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; min-width:60px; }
+  .timer .label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
+  .timer.over-time { border-color:var(--yellow); }
+  .timer.over-time .time { color:var(--yellow); }
+  .client-timer { font-size:12px; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+  .client-timer.over { color:var(--yellow); }
+
+  /* Week selector */
+  .week-selector { display:flex; align-items:center; gap:8px; }
+  .week-selector select { padding:6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-size:14px; }
+
+  /* Summary cards */
+  .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; padding:24px 32px; }
+  .card { background:var(--surface); border-radius:12px; padding:20px; border:1px solid var(--border); }
+  .card .label { font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:4px; }
+  .card .value { font-size:32px; font-weight:700; }
+  .card .sub { font-size:13px; color:var(--text-muted); margin-top:4px; }
+  .card .target { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .progress-bar { height:4px; background:var(--surface2); border-radius:2px; margin-top:8px; overflow:hidden; }
+  .progress-fill { height:100%; border-radius:2px; transition:width 0.5s; }
+  .progress-fill.good { background:var(--green); }
+  .progress-fill.warn { background:var(--yellow); }
+  .progress-fill.bad { background:var(--red); }
+
+  /* Change indicators */
+  .change { font-size:12px; font-weight:600; margin-left:6px; }
+  .change.up { color:var(--green); }
+  .change.down { color:var(--red); }
+  .change.flat { color:var(--text-muted); }
+
+  /* Client rows */
+  .clients { padding:0 32px 32px; }
+  .clients-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .clients-header h2 { font-size:18px; color:var(--text-muted); font-weight:500; }
+
+  .client-row { background:var(--surface); border-radius:12px; margin-bottom:12px; border:1px solid var(--border); overflow:hidden; transition:border-color 0.2s; }
+  .client-row:hover { border-color:#444; }
+  .client-row.health-red { border-left:4px solid var(--red); }
+  .client-row.health-yellow { border-left:4px solid var(--yellow); }
+  .client-row.health-green { border-left:4px solid var(--green); }
+
+  .client-summary { display:grid; grid-template-columns:200px repeat(4,1fr) 100px 40px; align-items:center; padding:16px 20px; cursor:pointer; gap:12px; }
+  .client-summary:hover { background:var(--surface2); }
+
+  .client-name { font-weight:600; font-size:16px; }
+  .client-name .sub-info { font-size:12px; color:var(--text-muted); font-weight:400; }
+  .client-name .suggested-health { font-size:10px; padding:2px 6px; border-radius:4px; margin-left:4px; }
+  .client-name .suggested-health.green { background:var(--green-bg); color:var(--green); }
+  .client-name .suggested-health.yellow { background:var(--yellow-bg); color:var(--yellow); }
+  .client-name .suggested-health.red { background:var(--red-bg); color:var(--red); }
+
+  .metric { text-align:center; }
+  .metric .val { font-size:18px; font-weight:600; }
+  .metric .lbl { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+  .metric .val.positive { color:var(--green); }
+  .metric .val.warning { color:var(--yellow); }
+  .metric .val.negative { color:var(--red); }
+
+  .health-badge { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; cursor:pointer; border:2px solid transparent; }
+  .health-badge.green { background:var(--green-bg); color:var(--green); border-color:var(--green); }
+  .health-badge.yellow { background:var(--yellow-bg); color:var(--yellow); border-color:var(--yellow); }
+  .health-badge.red { background:var(--red-bg); color:var(--red); border-color:var(--red); }
+  .health-badge.none { background:var(--surface2); color:var(--text-muted); border-color:var(--border); }
+
+  .expand-arrow { text-align:center; color:var(--text-muted); transition:transform 0.2s; }
+  .client-row.expanded .expand-arrow { transform:rotate(180deg); }
+
+  /* Expanded detail */
+  .client-detail { display:none; padding:0 20px 20px; border-top:1px solid var(--border); }
+  .client-row.expanded .client-detail { display:block; }
+
+  .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+  .detail-section { background:var(--surface2); border-radius:8px; padding:16px; }
+  .detail-section h4 { font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin-bottom:12px; }
+
+  .editable-field { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; color:var(--text); font-family:inherit; font-size:14px; resize:vertical; min-height:60px; transition:border-color 0.2s; }
+  .editable-field:focus { outline:none; border-color:var(--accent); }
+  .editable-field::placeholder { color:#555; }
+
+  .health-selector { display:flex; gap:8px; margin-bottom:12px; }
+  .health-option { padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+  .health-option.green { background:var(--green-bg); color:var(--green); }
+  .health-option.yellow { background:var(--yellow-bg); color:var(--yellow); }
+  .health-option.red { background:var(--red-bg); color:var(--red); }
+  .health-option.selected { border-color:currentColor; }
+  .health-option:hover { opacity:0.8; }
+
+  .raw-stats { font-size:13px; line-height:1.7; max-height:400px; overflow-y:auto; padding:12px; background:var(--bg); border-radius:6px; }
+  .raw-stats code { background:var(--surface2); padding:1px 5px; border-radius:3px; color:var(--accent); }
+  .raw-stats strong { color:#fff; }
+
+  /* IDS button */
+  .ids-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; background:var(--red-bg); color:var(--red); border:1px solid var(--red); border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; margin-top:12px; }
+  .ids-btn:hover { background:rgba(239,68,68,0.2); }
+  .ids-input { display:none; margin-top:8px; }
+  .ids-input.visible { display:block; }
+  .ids-submit { padding:6px 14px; background:var(--red); color:#fff; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; margin-top:6px; }
+
+  /* Save indicator */
+  .save-status { position:fixed; bottom:24px; right:24px; background:var(--green); color:#000; padding:10px 20px; border-radius:8px; font-weight:600; font-size:14px; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+  .save-status.visible { opacity:1; }
+
+  .loading { text-align:center; padding:60px; color:var(--text-muted); font-size:18px; }
+
+  /* Historical notes */
+  .history-selector { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+  .history-selector select { padding:4px 8px; background:var(--bg); border:1px solid var(--border); border-radius:4px; color:var(--text); font-size:12px; }
+  .history-note { font-size:12px; color:var(--text-muted); font-style:italic; padding:4px 0; }
+
+  @media (max-width:1200px) { .client-summary { grid-template-columns:160px repeat(4,1fr) 80px 40px; } }
+  @media (max-width:768px) { .client-summary { grid-template-columns:1fr; gap:8px; } .detail-grid { grid-template-columns:1fr; } .summary { grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+
+<div id="password-gate">
+  <h2>SOB DFY — L10 Dashboard</h2>
+  <input type="password" id="password-input" placeholder="Enter password" autofocus>
+  <div class="error" id="password-error"></div>
+</div>
+
+<div id="dashboard">
+  <div class="header">
+    <div class="header-left">
+      <div>
+        <h1>DFY L10 Scorecard</h1>
+      </div>
+      <div class="timer" id="meeting-timer">
+        <div>
+          <div class="time" id="timer-display">0:00</div>
+          <div class="label">Meeting time</div>
+        </div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="week" id="week-label">Loading...</div>
+      <div id="generated-at"></div>
+    </div>
+  </div>
+
+  <div class="summary" id="summary-cards"></div>
+
+  <div class="clients">
+    <div class="clients-header">
+      <h2>Client Review — sorted by health (reds first)</h2>
+    </div>
+    <div id="client-list"><div class="loading">Loading stats...</div></div>
+  </div>
+</div>
+
+<div class="save-status" id="save-status">Saved</div>
+
+<script src="config.js"></script>
+<script>
+// --- State ---
+let statsData = null;
+let notesData = {};
+let saveTimeouts = {};  // per-client debounce (FIX: was global)
+let meetingStart = null;
+let clientExpandTime = {};
+
+// --- Password Gate ---
+document.getElementById('password-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    if (e.target.value.trim() === CONFIG.PASSWORD) {
+      document.getElementById('password-gate').classList.add('hidden');
+      document.getElementById('dashboard').classList.add('visible');
+      meetingStart = Date.now();
+      startMeetingTimer();
+      loadDashboard();
+    } else {
+      document.getElementById('password-error').textContent = 'Incorrect password';
+      e.target.value = '';
+    }
+  }
+});
+
+// --- UPGRADE 3: Meeting Timer ---
+function startMeetingTimer() {
+  setInterval(() => {
+    const elapsed = Math.floor((Date.now() - meetingStart) / 1000);
+    const mins = Math.floor(elapsed / 60);
+    const secs = String(elapsed % 60).padStart(2, '0');
+    document.getElementById('timer-display').textContent = `${mins}:${secs}`;
+    const timerEl = document.getElementById('meeting-timer');
+    timerEl.classList.toggle('over-time', mins >= 30);
+
+    // Update per-client timers
+    document.querySelectorAll('.client-timer').forEach(el => {
+      const client = el.dataset.client;
+      if (clientExpandTime[client]) {
+        const cElapsed = Math.floor((Date.now() - clientExpandTime[client]) / 1000);
+        const cMins = Math.floor(cElapsed / 60);
+        const cSecs = String(cElapsed % 60).padStart(2, '0');
+        el.textContent = `${cMins}:${cSecs} on this client`;
+        el.classList.toggle('over', cMins >= 3);
+      }
+    });
+  }, 1000);
+}
+
+// --- Data Loading ---
+async function loadDashboard() {
+  try {
+    const [stats] = await Promise.all([
+      fetch('stats.json').then(r => r.json()),
+      fetchNotes(),
+    ]);
+    statsData = stats;
+    renderDashboard();
+  } catch (err) {
+    document.getElementById('client-list').innerHTML = `<div class="loading">Error: ${err.message}</div>`;
+  }
+}
+
+async function fetchNotes() {
+  try {
+    const resp = await fetch(
+      `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE}/${CONFIG.NOTES_TABLE}?maxRecords=200`,
+      { headers: { 'Authorization': `Bearer ${CONFIG.AIRTABLE_TOKEN}` } }
+    );
+    const data = await resp.json();
+    for (const rec of (data.records || [])) {
+      const f = rec.fields;
+      const key = f['Client Name'];
+      const week = f['Week Date'] || '';
+      if (key) {
+        // Index by client+week (FIX: filter by week)
+        const idx = `${key}::${week}`;
+        if (!notesData[idx]) notesData[idx] = {};
+        notesData[idx] = {
+          recordId: rec.id, health: f['Health Rating'] || '',
+          opportunity: f['Opportunity'] || '', wins: f['Wins'] || '',
+          flags: f['Flags'] || '', context: f['Context'] || '',
+          weekDate: week,
+        };
+      }
+    }
+  } catch (err) { console.error('Failed to load notes:', err); }
+}
+
+function getNotesForClient(clientName, weekDate) {
+  return notesData[`${clientName}::${weekDate || statsData.week_of}`] || {};
+}
+
+function getAllWeeksForClient(clientName) {
+  const weeks = [];
+  for (const key of Object.keys(notesData)) {
+    if (key.startsWith(clientName + '::')) {
+      const week = key.split('::')[1];
+      if (week) weeks.push(week);
+    }
+  }
+  return weeks.sort().reverse();
+}
+
+// --- UPGRADE 2: Auto Health Suggestion ---
+function suggestHealth(client) {
+  const roi = client.metrics.roi;
+  const rev = client.metrics.revenue;
+  const revAmount = rev.monthly || rev.weekly || rev.weekly_cash || 0;
+  const prev = client.prev_week || {};
+
+  if (roi !== null && roi !== undefined) {
+    if (roi >= 2) return 'Green';
+    if (roi >= 1) return 'Yellow';
+    return 'Red';
+  }
+  if (revAmount > 0 && prev.revenue > 0) {
+    const change = (revAmount - prev.revenue) / prev.revenue;
+    if (change >= -0.1) return 'Green';
+    if (change >= -0.3) return 'Yellow';
+    return 'Red';
+  }
+  return null;
+}
+
+// --- UPGRADE 1: Week-over-Week Change ---
+function renderChange(current, previous) {
+  if (!current || !previous || previous === 0) return '';
+  const pct = Math.round(((current - previous) / previous) * 100);
+  if (pct === 0) return '<span class="change flat">=</span>';
+  const arrow = pct > 0 ? '&#9650;' : '&#9660;';
+  const cls = pct > 0 ? 'up' : 'down';
+  return `<span class="change ${cls}">${arrow} ${Math.abs(pct)}%</span>`;
+}
+
+// --- Rendering ---
+function renderDashboard() {
+  const s = statsData;
+  document.getElementById('week-label').textContent = `Week of ${s.week_label}`;
+  const genDate = new Date(s.generated_at);
+  document.getElementById('generated-at').textContent = `Updated ${genDate.toLocaleDateString()} at ${genDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+
+  // UPGRADE 4: Summary cards with targets
+  const ds = s.department_summary;
+  const pds = s.prev_department_summary || {};
+  const targets = s.targets || {};
+
+  const roiPct = ds.avg_roi ? Math.min((ds.avg_roi / targets.roi) * 100, 100) : 0;
+  const roiColor = ds.avg_roi >= targets.roi ? 'good' : ds.avg_roi >= 1 ? 'warn' : 'bad';
+
+  document.getElementById('summary-cards').innerHTML = `
+    <div class="card">
+      <div class="label">Active Clients</div>
+      <div class="value">${ds.active_clients} ${renderChange(ds.active_clients, pds.active_clients)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Monthly Revenue</div>
+      <div class="value">${fmt$(ds.total_revenue_monthly)} ${renderChange(ds.total_revenue_monthly, pds.total_revenue_monthly)}</div>
+      <div class="sub">Weekly: ${fmt$(ds.total_revenue_weekly)} ${renderChange(ds.total_revenue_weekly, pds.total_revenue_weekly)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Weekly Emails</div>
+      <div class="value">${fmtN(ds.total_emails_weekly)} ${renderChange(ds.total_emails_weekly, pds.total_emails_weekly)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Avg ROI</div>
+      <div class="value">${ds.avg_roi ? ds.avg_roi + 'x' : '—'} ${renderChange(ds.avg_roi, pds.avg_roi)}</div>
+      <div class="target">Target: ${targets.roi}x</div>
+      <div class="progress-bar"><div class="progress-fill ${roiColor}" style="width:${roiPct}%"></div></div>
+    </div>
+  `;
+
+  // Sort: reds first, then yellows, then greens, then unset
+  const clients = Object.values(s.clients);
+  clients.sort((a, b) => {
+    const order = { 'Red': 0, 'Yellow': 1, 'Green': 2, '': 3 };
+    const aH = getNotesForClient(a.name).health || suggestHealth(a) || '';
+    const bH = getNotesForClient(b.name).health || suggestHealth(b) || '';
+    return (order[aH] ?? 3) - (order[bH] ?? 3);
+  });
+
+  document.getElementById('client-list').innerHTML = clients.map(c => renderClientRow(c)).join('');
+
+  // Event listeners
+  document.querySelectorAll('.client-summary').forEach(el => {
+    el.addEventListener('click', () => {
+      const row = el.closest('.client-row');
+      const client = row.dataset.client;
+      const wasExpanded = row.classList.contains('expanded');
+      row.classList.toggle('expanded');
+      if (!wasExpanded) { clientExpandTime[client] = Date.now(); }
+      else { delete clientExpandTime[client]; }
+    });
+  });
+
+  document.querySelectorAll('.health-option').forEach(el => {
+    el.addEventListener('click', (e) => { e.stopPropagation(); selectHealth(el.dataset.client, el.dataset.health); });
+  });
+
+  document.querySelectorAll('.editable-field').forEach(el => {
+    el.addEventListener('input', () => { scheduleNoteSave(el.dataset.client, el.dataset.field, el.value); });
+  });
+
+  // IDS buttons
+  document.querySelectorAll('.ids-btn').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const input = el.nextElementSibling;
+      input.classList.toggle('visible');
+      if (input.classList.contains('visible')) input.querySelector('textarea').focus();
+    });
+  });
+  document.querySelectorAll('.ids-submit').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const client = el.dataset.client;
+      const textarea = el.previousElementSibling;
+      if (textarea.value.trim()) { createIssue(client, textarea.value.trim()); textarea.value = ''; el.closest('.ids-input').classList.remove('visible'); }
+    });
+  });
+
+  // Historical notes selectors
+  document.querySelectorAll('.history-select').forEach(el => {
+    el.addEventListener('change', (e) => { loadHistoricalNotes(el.dataset.client, el.value); });
+  });
+}
+
+function renderClientRow(client) {
+  const c = client;
+  const notes = getNotesForClient(c.name);
+  const health = notes.health || '';
+  const suggestion = suggestHealth(c);
+  const effectiveHealth = health || suggestion || '';
+  const healthClass = effectiveHealth ? `health-${effectiveHealth.toLowerCase()}` : '';
+
+  const rev = c.metrics.revenue;
+  const displayRevenue = rev.monthly || rev.weekly || rev.weekly_cash || 0;
+  const revenueLabel = rev.monthly ? 'Monthly' : 'Weekly';
+  const prev = c.prev_week || {};
+  const prevRev = prev.revenue || 0;
+
+  const roi = c.metrics.roi;
+  const roiClass = roi ? (roi >= 2 ? 'positive' : roi >= 1 ? 'warning' : 'negative') : '';
+
+  const emails = c.metrics.emails;
+  const emailCount = emails.total_captured_weekly || emails.new_weekly || 0;
+  const prevEmails = prev.emails || 0;
+
+  const optins = c.metrics.total_optins || 0;
+  const prevOptins = prev.optins || 0;
+
+  const acct = c.airtable_data || {};
+  const mrrDisplay = acct.mrr ? fmt$(acct.mrr) : '—';
+  const monthsDisplay = acct.months_active ? `${acct.months_active}mo` : '';
+
+  // Historical weeks for this client
+  const histWeeks = getAllWeeksForClient(c.name);
+  const histOptions = histWeeks.map(w => `<option value="${w}" ${w === statsData.week_of ? 'selected' : ''}>${w}</option>`).join('');
+  const histSelector = histWeeks.length > 1 ? `
+    <div class="history-selector">
+      <span style="font-size:12px;color:var(--text-muted)">Notes from:</span>
+      <select class="history-select" data-client="${esc(c.name)}">${histOptions}</select>
+    </div>` : '';
+
+  return `
+    <div class="client-row ${healthClass}" data-client="${esc(c.name)}" id="row-${slugify(c.name)}">
+      <div class="client-summary">
+        <div class="client-name">
+          ${c.name}
+          ${suggestion && !health ? `<span class="suggested-health ${suggestion.toLowerCase()}">${suggestion[0]} suggested</span>` : ''}
+          <div class="sub-info">${mrrDisplay}/mo ${monthsDisplay ? '· '+monthsDisplay : ''}</div>
+          <div class="client-timer" data-client="${esc(c.name)}"></div>
+        </div>
+        <div class="metric">
+          <div class="val">${displayRevenue > 0 ? fmt$(displayRevenue) : '—'} ${renderChange(displayRevenue, prevRev)}</div>
+          <div class="lbl">${revenueLabel} Rev</div>
+        </div>
+        <div class="metric">
+          <div class="val ${roiClass}">${roi ? roi+'x' : '—'} ${renderChange(roi, prev.roi)}</div>
+          <div class="lbl">ROI</div>
+        </div>
+        <div class="metric">
+          <div class="val">${emailCount > 0 ? fmtN(emailCount) : '—'} ${renderChange(emailCount, prevEmails)}</div>
+          <div class="lbl">Emails</div>
+        </div>
+        <div class="metric">
+          <div class="val">${optins > 0 ? fmtN(optins) : '—'} ${renderChange(optins, prevOptins)}</div>
+          <div class="lbl">Opt-ins</div>
+        </div>
+        <div><div class="health-badge ${effectiveHealth ? effectiveHealth.toLowerCase() : 'none'}">${effectiveHealth ? effectiveHealth[0] : '?'}</div></div>
+        <div class="expand-arrow">&#9660;</div>
+      </div>
+
+      <div class="client-detail">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h4>Health Rating ${suggestion ? `<span style="font-size:11px;font-weight:400;color:var(--text-muted)">(AI suggests: ${suggestion})</span>` : ''}</h4>
+            <div class="health-selector">
+              <div class="health-option green ${health==='Green'?'selected':''}" data-client="${esc(c.name)}" data-health="Green">Green</div>
+              <div class="health-option yellow ${health==='Yellow'?'selected':''}" data-client="${esc(c.name)}" data-health="Yellow">Yellow</div>
+              <div class="health-option red ${health==='Red'?'selected':''}" data-client="${esc(c.name)}" data-health="Red">Red</div>
+            </div>
+            ${histSelector}
+            <h4>Opportunity</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="opportunity" placeholder="Growth opportunity?">${notes.opportunity||''}</textarea>
+            <h4 style="margin-top:12px">Wins</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="wins" placeholder="What went well?">${notes.wins||''}</textarea>
+          </div>
+          <div class="detail-section">
+            <h4>Flags</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="flags" placeholder="Risks or blockers?">${notes.flags||''}</textarea>
+            <h4 style="margin-top:12px">Context</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="context" placeholder="Important context?">${notes.context||''}</textarea>
+            <div class="ids-btn" onclick="event.stopPropagation()">&#9888; Flag as IDS Issue</div>
+            <div class="ids-input">
+              <textarea class="editable-field" style="min-height:40px" placeholder="Describe the issue to IDS..."></textarea>
+              <button class="ids-submit" data-client="${esc(c.name)}">Create Issue</button>
+            </div>
+          </div>
+        </div>
+        <div class="detail-section" style="margin-top:16px">
+          <h4>Full Stats from Slack</h4>
+          <div class="raw-stats">${c.raw_html || '<em>No detailed stats available</em>'}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// --- UPGRADE 5: Historical Notes ---
+function loadHistoricalNotes(clientName, weekDate) {
+  const notes = getNotesForClient(clientName, weekDate);
+  const row = document.getElementById(`row-${slugify(clientName)}`);
+  if (!row) return;
+  const fields = row.querySelectorAll('.editable-field');
+  fields.forEach(f => {
+    const field = f.dataset.field;
+    if (field && notes[field] !== undefined) {
+      f.value = notes[field];
+    }
+  });
+  // Show a note if viewing historical
+  if (weekDate !== statsData.week_of) {
+    const existing = row.querySelector('.history-note');
+    if (existing) existing.remove();
+    const note = document.createElement('div');
+    note.className = 'history-note';
+    note.textContent = `Viewing notes from ${weekDate} (read-only)`;
+    row.querySelector('.detail-grid').prepend(note);
+  }
+}
+
+// --- Health & Notes ---
+function selectHealth(clientName, health) {
+  const key = `${clientName}::${statsData.week_of}`;
+  if (!notesData[key]) notesData[key] = {};
+  notesData[key].health = health;
+
+  document.querySelectorAll(`.health-option[data-client="${clientName}"]`).forEach(el => {
+    el.classList.toggle('selected', el.dataset.health === health);
+  });
+  const row = document.getElementById(`row-${slugify(clientName)}`);
+  if (row) {
+    row.className = `client-row expanded health-${health.toLowerCase()}`;
+    row.dataset.client = clientName;
+    const badge = row.querySelector('.health-badge');
+    badge.className = `health-badge ${health.toLowerCase()}`;
+    badge.textContent = health[0];
+  }
+  saveNotes(clientName);
+}
+
+function scheduleNoteSave(clientName, field, value) {
+  const key = `${clientName}::${statsData.week_of}`;
+  if (!notesData[key]) notesData[key] = {};
+  notesData[key][field] = value;
+  // FIX: per-client debounce
+  if (saveTimeouts[clientName]) clearTimeout(saveTimeouts[clientName]);
+  saveTimeouts[clientName] = setTimeout(() => saveNotes(clientName), 1000);
+}
+
+async function saveNotes(clientName) {
+  const key = `${clientName}::${statsData.week_of}`;
+  const notes = notesData[key];
+  if (!notes) return;
+
+  const fields = {
+    'Client Name': clientName, 'Week Date': statsData.week_of,
+    'Opportunity': notes.opportunity || '', 'Wins': notes.wins || '',
+    'Flags': notes.flags || '', 'Context': notes.context || '',
+  };
+  if (notes.health) fields['Health Rating'] = notes.health;
+
+  try {
+    if (notes.recordId) {
+      await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE}/${CONFIG.NOTES_TABLE}/${notes.recordId}`, {
+        method: 'PATCH', headers: { 'Authorization': `Bearer ${CONFIG.AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields }),
+      });
+    } else {
+      const resp = await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE}/${CONFIG.NOTES_TABLE}`, {
+        method: 'POST', headers: { 'Authorization': `Bearer ${CONFIG.AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields }),
+      });
+      const data = await resp.json();
+      if (data.id) notesData[key].recordId = data.id;
+    }
+    showSave();
+  } catch (err) { console.error('Save failed:', err); }
+}
+
+// --- UPGRADE 6: IDS Issue Creation ---
+async function createIssue(clientName, issueText) {
+  const fields = {
+    'Client Name': clientName,
+    'Issue': issueText,
+    'Date Flagged': statsData.week_of,
+    'Status': 'Open',
+  };
+  try {
+    await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE}/${CONFIG.ISSUES_TABLE}`, {
+      method: 'POST', headers: { 'Authorization': `Bearer ${CONFIG.AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields }),
+    });
+    showSave('Issue created');
+  } catch (err) { console.error('Issue creation failed:', err); }
+}
+
+// --- Helpers ---
+function showSave(msg) {
+  const el = document.getElementById('save-status');
+  el.textContent = msg || 'Saved';
+  el.classList.add('visible');
+  setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function fmt$(n) { return n ? '$' + Math.round(n).toLocaleString() : '—'; }
+function fmtN(n) { return n ? n.toLocaleString() : '—'; }
+function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+function esc(s) { return s.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+</script>
+</body>
+</html>

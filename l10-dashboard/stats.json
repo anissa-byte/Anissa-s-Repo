@@ -1,0 +1,261 @@
+{
+  "generated_at": "2026-03-23T14:13:06.208500",
+  "week_of": "2026-03-23",
+  "week_label": "March 23, 2026",
+  "prev_week_of": "2026-03-16",
+  "total_clients": 8,
+  "department_summary": {
+    "active_clients": 8,
+    "total_revenue_monthly": 25161.0,
+    "total_revenue_weekly": 18749.0,
+    "total_emails_weekly": 117392,
+    "avg_roi": 5.34
+  },
+  "prev_department_summary": {
+    "active_clients": 7,
+    "total_revenue_monthly": 20931.0,
+    "total_revenue_weekly": 21431.0,
+    "total_emails_weekly": 117460,
+    "avg_roi": 5.32
+  },
+  "clients": {
+    "Jamie Sea": {
+      "name": "Jamie Sea",
+      "airtable_account": "Jamie Sea",
+      "airtable_data": {
+        "id": "rec9KyciSjSzxdGSp",
+        "stage": "Ongoing Engagement (Quarterly Meetings)",
+        "mrr": 13000,
+        "on_track": "",
+        "months_active": 11
+      },
+      "metrics": {
+        "revenue": {
+          "monthly": 23983.0,
+          "total": 1416917.0
+        },
+        "roi": 9.0,
+        "emails": {
+          "new_weekly": 46706,
+          "new_ratio": 76,
+          "total_captured_weekly": 111420
+        },
+        "total_optins": 9639
+      },
+      "posted_by": "U04NMSDA5S9",
+      "posted_at": "1774277701.582789",
+      "raw_html": "<strong>\u2014 Total #\u2018s since April 13 (Day 1 of this system) \u2014</strong><br>&#8226; Emails Captured: <code>61,841</code><br>&#8226; New Emails Captured: <code>46,706</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>76%</code> | Goal: <code>43%</code><br><strong>Revenue</strong><br>&#8226; Current Month: <code>$23,983</code> | Goal: <code>$100,000</code><br>&#8226; Total Revenue: <code>$1,416,917</code> <br>    &nbsp;&nbsp;&#9702; ROI: <code>9.0x</code><br>&#8226; CEO Club Sales: <code>240</code><br>    &nbsp;&nbsp;&#9702; Revenue: <code>$719,760</code> <br>&#8226; Mind Body Millions Podcast: <code>1,448</code> <br>    &nbsp;&nbsp;&#9702; Revenue: <code>$39,096</code><br>&#8226; Currency Academy: <code>191</code> <br>    &nbsp;&nbsp;&#9702; Revenue: <code>$572,427</code> <br>&#8226; Course Creator Podcast: <code>237</code><br>    &nbsp;&nbsp;&#9702; Revenue: <code>$11,139</code><br>&#8226; Broadcast Room: <code>1,585</code> <br>    &nbsp;&nbsp;&#9702; Revenue: <code>$74,495</code><br>-------------------------------------------------------<br><br>:bar<em>chart: LAST 7 DAYS OF STATS: </em><a href=\"https://docs.google.com/spreadsheets/d/1vXENT2LkxOlWXXKHJmNNTqV-hcO3WR9fsXbdwTI2tNc/edit?gid=1810926067#gid=1810926067\" target=\"_blank\">Sheet Here</a>_<br><em>Date range is from 3/15 00:00 EST - 3/21 at 23:59 EST</em><br><br><strong>\u2014 Currency Academy Live - March 26 (Registration) \u2014</strong><br>&#8226; Opt-ins: <code>3,389</code> | Goal: <code>12,750</code><br>&#8226; Registrations: <code>3,139</code> | Goal: <code>7,500</code><br>    &nbsp;&nbsp;&#9702; Registration Rate: <code>92%</code> | Goal: <code>70%</code> <br>&#8226; New Emails Captured: <code>996</code> | Goal: <code>70%</code><br>    &nbsp;&nbsp;&#9702; New Email Capture Rate: <code>31%</code> | Goal: <code>30%</code><br><strong>\u2014 DM Setter Stats \u2014</strong><br>&#8226; Conversations Sent to Setters: <code>811</code><br>&#8226; Automated Follow Up Sent: <code>293</code> <br>    &nbsp;&nbsp;&#9702; Sent % Rate: <code>36%</code><br>&#8226; Responded to Automated Follow Up: <code>244</code><br>    &nbsp;&nbsp;&#9702; Response % Rate: <code>83%</code><br><strong>\u2014 New Followers \u2014</strong><br>&#8226; Opt-ins: <code>4,357</code> | Goal: <code>3,000</code><br>&#8226; Energy of Expansion Opt Ins: <code>1,151</code> | Goal: <code>500</code> <br>    &nbsp;&nbsp;&#9702; Funnel Opt In Rate: <code>26%</code> | Goal: <code>19%</code><br><strong>\u2014 Wealth Receiving Quiz \u2014</strong><br>&#8226; Opt-ins: <code>664</code> | Goal: <code>1,205</code><br>&#8226; Emails Captured: <code>520</code> | Goal: <code>964</code><br>&#8226; New Emails Captured: <code>145</code><br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>28%</code> | Goal: <code>43%</code><br>&#8226; Total Quiz Completions: <code>320</code><br>&#8226; Total Qualified Leads: <code>217</code><br>    &nbsp;&nbsp;&#9702; Country Qualified %: <code>68%</code> <br>&#8226; Purchased The Broadcast Room: <code>1</code> | Goal: <code>92</code><br>    &nbsp;&nbsp;&#9702; Purchase Conversion Rate: <code>0.2%</code> | Goal: <code>3%</code><br><strong>\u2014 Energy Of Expansion \u2014</strong><br>&#8226; Opt-ins: <code>1,167</code> | Goal: <code>964</code><br>&#8226; Emails Captured: <code>598</code> | Goal: <code>1,034</code><br>&#8226; New Emails Captured: <code>537</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>90%</code> | Goal: <code>43%</code><br>&#8226; Clicks to PDF Link: <code>494</code> | Goal: <code>92</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>42%</code> | Goal: <code>3%</code><br>&#8226; Purchased the Currency Academy: <code>1</code> | Goal: <code>2</code><br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>0.2%</code> | Goal: <code>1%</code><br><strong>\u2014 Mind Body Millions Podcast Direct Purchase \u2014</strong><br>&#8226; Opt-ins: <code>23</code> | Goal: <code>964</code><br>&#8226; Emails Captured: <code>18</code> | Goal: <code>1,034</code><br>&#8226; New Emails Captured: <code>6</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>33%</code> | Goal: <code>43%</code><br>&#8226; Purchases: <code>3</code> | Goal: <code>92</code><br>    &nbsp;&nbsp;&#9702; Purchase Conversion Rate: <code>17%</code> | Goal: <code>3%</code><br><strong>\u2014 Archetype Quiz \u2014</strong><br>&#8226; Opt-ins: <code>29</code> | Goal: <code>1,205</code><br>&#8226; Emails Captured: <code>28</code> | Goal: <code>964</code><br>&#8226; New Emails Captured: <code>10</code><br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>36%</code> | Goal: <code>43%</code><br>&#8226; Purchased The Broadcast Room: <code>1</code> | Goal: <code>92</code> <br>    &nbsp;&nbsp;&#9702; Purchase Conversion Rate: <code>4%</code> | Goal: <code>3%</code><br><strong>\u2014 The Missing Piece \u2014</strong><br>&#8226; Opt-ins: <code>10</code> | Goal: <code>326</code><br>&#8226; Emails Captured: <code>8</code> | Goal: <code>260</code><br>&#8226; New Emails Captured: <code>7</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>88%</code> | Goal: <code>43%</code><br>&#8226; Purchased Currency Academy: <code>0</code> <br>    &nbsp;&nbsp;&#9702; Purchase Conversion Rate: <code>0%</code> | Goal: <code>3%</code><br>-------------------------------------------------------<br><br>Cc: <br><br>",
+      "prev_week": {
+        "revenue": 20286.0,
+        "roi": 9.0,
+        "emails": 106445,
+        "optins": 6666
+      }
+    },
+    "Mindvalley": {
+      "name": "Mindvalley",
+      "airtable_account": "Mindvalley",
+      "airtable_data": {
+        "id": "recr3NKInb5Mj2jee",
+        "stage": "Months 2\u20133: Monthly Meetings ",
+        "mrr": 13000,
+        "on_track": "",
+        "months_active": 2
+      },
+      "metrics": {
+        "revenue": {
+          "weekly": 1492.0
+        },
+        "roi": null,
+        "emails": {
+          "new_weekly": 746,
+          "new_ratio": 100,
+          "total_captured_weekly": 814
+        },
+        "total_optins": 1099
+      },
+      "posted_by": "U0AFCEDAPDH",
+      "posted_at": "1774272853.329329",
+      "raw_html": ":bar<em>chart: <strong>STATS INSIGHTS: </em><a href=\"https://docs.google.com/spreadsheets/d/1-foDDzX0Qw8ZU5dc<em\" target=\"_blank\">https://docs.google.com/spreadsheets/d/1-foDDzX0Qw8ZU5dc<em</a>-L212HoKLNJtoj9FRuvIQAYNGI/edit?gid=124187717#gid=124187717|Sheet here></em></strong><br><em>Date range for weekly is from 3/15 00:00 PT - 3/21 at 23:59 PT</em><br><br>&#8226; :star2:  North Star Metric: Total Emails (aka Leads) Collected in DMs: <code>4,699</code><br>    &nbsp;&nbsp;&#9702; This Week: <code>746</code> | Goal: <code>2,500</code><br>    &nbsp;&nbsp;&#9702; This Month: <code>3,399</code> | Goal: <code>10,000</code><br>&#8226; New Total Emails Collected: <code>4,699</code><br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>100%</code> | Goal: <code>43%</code><br>    &nbsp;&nbsp;&#9702; New Emails this week: <code>746</code> | Goal: <code>1,075</code><br>&#8226; <strong>Manifestation Quiz</strong><br>    &nbsp;&nbsp;&#9702; Opt-ins: <code>671</code> | Goal: <code>1,923</code><br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Stories: <code>7</code> | Traffic Contribution: <code>1%</code> | Traffic Contribution Goal: <code>33%</code> <br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Posts: <code>12</code> | Traffic Contribution: <code>2%</code> | Traffic Contribution Goal: <code>33%</code> <br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; New Followers: <code>652</code>  | Traffic Contribution: <code>97%</code>  | Traffic Contribution Goal: <code>33%</code><br>    &nbsp;&nbsp;&#9702; Emails Captured: <code>389</code> | Goal: <code>1,250</code><br>    &nbsp;&nbsp;&#9702; Email Capture Rate: <code>58%</code> | Goal: <code>80%</code> <br>    &nbsp;&nbsp;&#9702; Link Click Through Rate: <code>72%</code> | Goal: <code>65%</code><br>&#8226; <strong>AI Summit Live Event</strong><br>    &nbsp;&nbsp;&#9702; Opt-ins: <code>428</code> | Goal: <code>1,923</code><br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Stories: <code>203</code> | Traffic Contribution: <code>47%</code> | Traffic Contribution Goal: <code>50%</code> <br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Posts: <code>225</code> | Traffic Contribution: <code>53%</code> | Traffic Contribution Goal: <code>50%</code> <br>    &nbsp;&nbsp;&#9702; Emails Captured: <code>425</code> | Goal: <code>1,250</code><br>    &nbsp;&nbsp;&#9702; Email Capture Rate: <code>85%</code> | Goal: <code>80%</code> <br>    &nbsp;&nbsp;&#9702; Link Click Through Rate: <code>85%</code> | Goal: <code>65%</code><br><br><br>",
+      "prev_week": {
+        "revenue": 2854.0,
+        "roi": null,
+        "emails": 1443,
+        "optins": 2111
+      }
+    },
+    "Her First $100K": {
+      "name": "Her First $100K",
+      "airtable_account": "Her First $100K",
+      "airtable_data": {
+        "id": "recxWrw4HKbbcp0p9",
+        "stage": "Ongoing Engagement (Quarterly Meetings)",
+        "mrr": 10000,
+        "on_track": "On Track",
+        "months_active": 34
+      },
+      "metrics": {
+        "revenue": {
+          "total": 2207139.0,
+          "weekly": 3369.0
+        },
+        "roi": 8.0,
+        "emails": {
+          "new_weekly": 3369,
+          "new_ratio": 88,
+          "total_captured_weekly": 2757
+        },
+        "total_optins": 3747
+      },
+      "posted_by": "U0AFCEDAPDH",
+      "posted_at": "1774272823.147919",
+      "raw_html": ":bar<em>chart: <strong>STATS INSIGHTS: </em><a href=\"https://docs.google.com/spreadsheets/d/1QrlOgLdjcxSXfxWxW3Ok6IXokD3sxNZ5e2<em\" target=\"_blank\">https://docs.google.com/spreadsheets/d/1QrlOgLdjcxSXfxWxW3Ok6IXokD3sxNZ5e2<em</a>vj5b30X4/edit?gid=1023192151#gid=1023192151|Sheet here></em></strong><br>Date range for weekly is from 3/15 00:00 PT - 3/21 at 23:59 PT<br><br>&#8226; New Total Emails To ActiveCampaign: <code>517,428</code><br>&#8226; New Email Ratio: <code>88%</code><br>&#8226; New Emails this week: <code>3,369</code><br>&#8226; Total Emails Collected in DMs: <code>587,791</code> <br>&#8226; March Revenue Influenced: <code>$19,512</code><br>&#8226; Total Revenue Influenced: <code>$2,207,139</code><br>&#8226; ROI: <code>8x</code><br>&#8226; Open Rate for Reels/Posts/Lives: <code>64%</code><br>&#8226; Response Rate for Reels/Posts/Lives: <code>69%</code><br><br><strong>\u2013 Evergreen: 5-day Debt Challenge \u2013</strong><br>&#8226; Opt-ins: <code>775</code><br>&#8226; Total Leads (Emails) Captured: <code>707</code> - <code>91%</code> CVR | Goal: <code>75%</code><br>&#8226; New Emails Captured: <code>681</code> - <code>96%</code> New Email Capture Rate<br>&#8226; Link Clicks - Day 1: <code>383</code> - <code>56%</code> Click-Thru Rate | Goal: <code>65%</code><br>&#8226; Opt-Ins Day 2: <code>270</code> - <code>68%</code> CVR<br>&#8226; Link Clicks - Day 2: <code>77</code> - <code>29%</code> Click-Thru Rate<br>&#8226; Opt-Ins Day 3: <code>165</code> - <code>61%</code> CVR<br>&#8226; Opt-Ins Day 4: <code>127</code> - <code>77%</code> CVR<br>&#8226; Opt-Ins Day 5: <code>98</code> - <code>77%</code> CVR<br>&#8226; Opt-Ins Day 6: <code>22</code> - <code>22%</code> CVR<br>&#8226; Link Clicks - Day 6: <code>16</code> - <code>73%</code> Click-Thru Rate<br><br><strong><em>\u2013</em> How I Got My First $100K \u2013</strong> <br>&#8226; Opt-ins: <code>2,457</code><br>&#8226; Total Leads (Emails) Captured: <code>2,149</code> - <code>87%</code> CVR | Goal: <code>75%</code><br>New Emails Captured: <code>1,955</code> - <code>91%</code> New Email Capture Rate<br>&#8226; Link Clicks: <code>1,347</code> - <code>63%</code> Click-Thru Rate | Goal: <code>65%</code><br><br><strong><em>\u2013</em> Affiliate: Personal Loans \u2013</strong><br>&#8226; Opt-ins: <code>515</code><br>&#8226; Total Leads (Emails) Captured: <code>429</code> - <code>83%</code> CVR | Goal: <code>75%</code><br>&#8226; New Emails Captured: <code>121</code> - <code>28%</code> New Email Capture Rate<br>&#8226; Link Clicks: <code>263</code> - <code>61%</code> Click-Thru Rate | Goal: <code>65%</code><br><br><strong>-----------------------------------------------------</strong><br><br>cc: <br><br>",
+      "prev_week": {
+        "revenue": 5793.0,
+        "roi": 8.0,
+        "emails": 6221,
+        "optins": 8503
+      }
+    },
+    "Molly Galbraith/GGS": {
+      "name": "Molly Galbraith/GGS",
+      "airtable_account": "Molly Galbraith / Girls Gone Strong",
+      "airtable_data": {
+        "id": "recMkbRIG5AEz5EKq",
+        "stage": "Ongoing Engagement (Quarterly Meetings)",
+        "mrr": 11000,
+        "on_track": "On Track",
+        "months_active": 17
+      },
+      "metrics": {
+        "revenue": {},
+        "roi": 3.5,
+        "emails": {
+          "total_captured_weekly": 219
+        },
+        "total_optins": null
+      },
+      "posted_by": "U0AFCEDAPDH",
+      "posted_at": "1774272789.720489",
+      "raw_html": "<strong>Girls Gone Strong - 3/23/26</strong><br><br>:bar<em>chart: <strong>STATS INSIGHTS: </em><a href=\"https://docs.google.com/spreadsheets/d/1<em\" target=\"_blank\">https://docs.google.com/spreadsheets/d/1<em</a>8kEif9nE</em>hUlAag8WJdOCvO54Z0BKSMIs5pBLZT9dc/edit?gid=1114627746#gid=1114627746|Sheet here>_</strong><br>Date range for weekly is from 3/15 00:00 PT - 3/21 at 23:59 PT<br><br><strong>\u2014 Total #\u2019s \u2014</strong><br>&#8226; Total Emails Collected in DMs - Since 11/1 (Molly): 29,177<br>    &nbsp;&nbsp;&#9702; GGS account: 17,246<br>&#8226; New Emails Collected in DMs - Since 11/1 (Molly): 15,432<br>    &nbsp;&nbsp;&#9702; GGS account: 8,618<br>&#8226; MCSC ManyChat Sales (Molly): 424<br>    &nbsp;&nbsp;&#9702; Revenue collected: $429,766.62 ($0 this week)<br>&#8226; MCSC ManyChat Sales (GGS): 49<br>    &nbsp;&nbsp;&#9702; Revenue collected: $52,886.57 ($0 this week)<br>&#8226; CPPC ManyChat Sales (Molly): 113<br>    &nbsp;&nbsp;&#9702; Revenue collected: $111,684.78 ($0 this week)<br>&#8226; CPPC ManyChat Sales (GGS): 15<br>    &nbsp;&nbsp;&#9702; Revenue collected: $16,379.04 ($0 this week)<br>&#8226; GGS-1 ManyChat Sales (Molly): 116<br>    &nbsp;&nbsp;&#9702; Revenue collected: $119,033.35 ($0 this week)<br>&#8226; GGS-1 ManyChat Sales (GGS): 8<br>    &nbsp;&nbsp;&#9702; Revenue collected: $8,979.46 ($0 this week)<br>&#8226; Open Rate for Reels/Posts/Lives: 90%<br>&#8226; Response Rate for Reels/Posts/Lives: 81%<br>    &nbsp;&nbsp;&#9702; ROI: 3.5x<br><br><strong>\u2014 (WPUPCS) Women & Pull-Ups Cheat Sheet \u2014</strong><br>&#8226; Opt-ins (Molly): 247<br>    &nbsp;&nbsp;&#9702; GGS account: 315<br>&#8226; Emails Captured (Molly): 204 - CVR 83%<br>    &nbsp;&nbsp;&#9702; GGS account: 246 - CVR 78%<br>&#8226; Purchased MCSC (Molly): 0<br>    &nbsp;&nbsp;&#9702; GGS account: 0<br><br><strong>\u2014 (MCARDIOCS) Menopause & Cardio Cheat Sheet \u2014</strong><br>&#8226; Opt-ins (Molly): 0<br>    &nbsp;&nbsp;&#9702; GGS account: 215<br>&#8226; Emails Captured (Molly): 1 - CVR 100%<br>    &nbsp;&nbsp;&#9702; GGS account: 188 - CVR 87%<br>&#8226; Purchased MCSC (Molly): 0<br>    &nbsp;&nbsp;&#9702; GGS account: 0<br><br><strong>\u2014 (MTCS) Menopause & Testosterone Cheat Sheet \u2014</strong><br>&#8226; Opt-ins (Molly): 1<br>    &nbsp;&nbsp;&#9702; GGS account: 93<br>&#8226; Emails Captured (Molly): 14 - CVR 78%<br>    &nbsp;&nbsp;&#9702; GGS account: 79 - CVR 85%<br>&#8226; Purchased MCSC (Molly): 0<br>    &nbsp;&nbsp;&#9702; GGS account: 0<br><em>_</em><em>_</em><em>_</em>_<br><br>cc: <br><br>",
+      "prev_week": {
+        "revenue": 0,
+        "roi": 3.5,
+        "emails": 761,
+        "optins": 0
+      }
+    },
+    "Adeyemi Adeyosoye": {
+      "name": "Adeyemi Adeyosoye",
+      "airtable_account": null,
+      "airtable_data": {},
+      "metrics": {
+        "revenue": {
+          "weekly_cash": 679.0
+        },
+        "roi": null,
+        "emails": {},
+        "total_optins": 437
+      },
+      "posted_by": "U088X6AJ7QU",
+      "posted_at": "1774266274.423059",
+      "raw_html": " <strong>ANALYTICS:</strong><br><em>Date range is from 3/20 00:00 UTC - 3/22 at 23:59 UTC</em><br><br><strong>\u2014 Erupt \u2014</strong><br>&#8226; Opt-ins: <code>120</code><br>    &nbsp;&nbsp;&#9702; Stories: <code>82</code> | Traffic Contribution: <code>68%</code> | Traffic Contribution Goal: <code>50%</code><br>    &nbsp;&nbsp;&#9702; Posts: <code>38</code> | Traffic Contribution: <code>32%</code> | Traffic Contribution Goal: <code>50%</code><br>&#8226; Clicks to Sales Page: <code>54</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>45%</code> | Goal: <code>72%</code><br>&#8226; Customers: <code>7</code> <br>&#8226; Sales Page Conversion Rate: <code>13%</code> | Goal: <code>2%</code><br>&#8226; Cash Collected: <code>$679</code><br><strong>\u2014 New Followers \u2014</strong><br>&#8226; Opt-ins: <code>317</code><br>&#8226; Links Sent: <code>46</code><br>&#8226; Clicks to Sales Page: <code>20</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>43%</code> | Goal: <code>50%</code><br>&#8226; Customers: <code>0</code><br>&#8226; Cash Collected: <code>$0</code> <br>cc   <br><br>hey team, fyi the dashboard in LookerStudio is live <a href=\"https://lookerstudio.google.com/s/oX763BbEC6o\" target=\"_blank\">here</a><br><br>",
+      "prev_week": {}
+    },
+    "Peach Fit": {
+      "name": "Peach Fit",
+      "airtable_account": "Peach Fit",
+      "airtable_data": {
+        "id": "rec4x67o4LCZlFODG",
+        "stage": "Week 1: Campaign 1",
+        "mrr": 0,
+        "on_track": "",
+        "months_active": 1
+      },
+      "metrics": {
+        "revenue": {
+          "weekly_cash": 13209.0
+        },
+        "roi": null,
+        "emails": {
+          "new_weekly": 181,
+          "new_ratio": 85,
+          "total_captured_weekly": 394
+        },
+        "total_optins": 3377
+      },
+      "posted_by": "U088X6AJ7QU",
+      "posted_at": "1774266240.332669",
+      "raw_html": "<strong>\u2014 All Time \u2014</strong> <br>&#8226; Cash Collected for Fat to Jacked: <code>$2,981</code> <br>&#8226; Cash Collected for Coaching: <code>$3,155</code><br>    &nbsp;&nbsp;&#9702; Revenue for Coaching: <code>$12,493</code><br><strong>\u2014 Month Totals \u2014</strong> <br>&#8226; Cash Collected for Fat to Jacked: <code>$2,831</code> <br>&#8226; Cash Collected for Coaching: <code>$3,155</code><br>    &nbsp;&nbsp;&#9702; Revenue for Coaching: <code>$12,493</code><br> <strong>ANALYTICS:</strong><br><em>Date range is from 3/15 00:00 EST - 3/21 at 23:59 EST</em><br><br><strong>\u2014 Fat To Jacked \u2014</strong><br>&#8226; Opt-ins: <code>199</code><br>    &nbsp;&nbsp;&#9702; Stories: <code>54</code> | Traffic Contribution: <code>27%</code> | Traffic Contribution Goal: <code>50%</code><br>    &nbsp;&nbsp;&#9702; Posts: <code>145</code> | Traffic Contribution: <code>73%</code> | Traffic Contribution Goal: <code>50%</code><br>&#8226; Clicks to Sales Page: <code>141</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>71%</code> | Goal: <code>72%</code><br>&#8226; Customers: <code>4</code> <br>&#8226; Sales Page Conversion Rate: <code>2.8%</code> | Goal: <code>2%</code><br>&#8226; Cash Collected for Fat to Jacked: <code>$150</code><br>&#8226; Apps Completed: <code>2</code> | Goal: <code>303</code>  <br>&#8226; Apps Completion %: <code>50%</code>  | Goal: <code>85%</code> <br>&#8226; Apps Qualified: <code>2</code>  | Goal: <code>212</code> <br>&#8226; Apps Qualified Leads %: <code>100%</code>  | Goal: <code>70%</code> <br>&#8226; Fat to Jacked Customer -> Booked Call: <code>2</code> <br>&#8226; Call Booking %: <code>100%</code>  | Goal: <code>75%</code> <br>&#8226; Closes: <code>1</code><br>&#8226; Cash Collected for Coaching: <code>$220</code><br>    &nbsp;&nbsp;&#9702; Revenue for Coaching: <code>$1,997</code><br><strong>\u2014 New Follower \u2014</strong><br>&#8226; Opt-ins: <code>2,750</code><br>&#8226; Links Sent: <code>909</code><br>&#8226; Clicks to Sales Page: <code>529</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>58%</code> | Goal: <code>50%</code><br>&#8226; Customers: <code>7</code><br>&#8226; Sales Page Conversion Rate: <code>1.3%</code> | Goal: <code>2%</code> <br>&#8226; Cash Collected for Fat to Jacked: <code>$225</code> <br>&#8226; Apps Completed: <code>5</code> | Goal: <code>7</code>  <br>&#8226; Apps Completion %: <code>71%</code>  | Goal: <code>85%</code> <br>&#8226; Apps Qualified: <code>0</code>  | Goal: <code>5</code> <br>&#8226; Apps Qualified Leads %: <code>0%</code>  | Goal: <code>70%</code> <br>&#8226; Booked Call: <code>0</code> <br>&#8226; Call Booking %: <code>14%</code>  | Goal: <code>75%</code> <br>&#8226; Closes: <code>0</code><br>&#8226; Cash Collected for Coaching: <code>$0</code><br>    &nbsp;&nbsp;&#9702; Revenue for Coaching: <code>$0</code><br><strong>\u2014 The 3 Numbers \u2014</strong><br>&#8226; Opt-ins: <code>428</code><br>    &nbsp;&nbsp;&#9702; Stories: <code>265</code> | Traffic Contribution: <code>62%</code> | Traffic Contribution Goal: <code>50%</code><br>    &nbsp;&nbsp;&#9702; Posts: <code>163</code> | Traffic Contribution: <code>38%</code> | Traffic Contribution Goal: <code>50%</code><br>&#8226; Emails Captured: <code>213</code><br>&#8226; New Emails Captured: <code>181</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>85%</code> | Goal: <code>43%</code><br>&#8226; Clicks to Sales Page: <code>143</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>67%</code> | Goal: <code>72%</code><br>&#8226; Customers: <code>8</code> <br>&#8226; Sales Page Conversion Rate: <code>5.5%</code> | Goal: <code>2%</code><br>&#8226; Cash Collected for Fat to Jacked: <code>$492</code><br>&#8226; Apps Completed: <code>2</code> | Goal: <code>303</code>  <br>&#8226; Apps Completion %: <code>25%</code>  | Goal: <code>85%</code> <br>&#8226; Apps Qualified: <code>0</code>  | Goal: <code>212</code> <br>&#8226; Apps Qualified Leads %: <code>0%</code>  | Goal: <code>70%</code> <br>&#8226; Fat to Jacked Customer -> Booked Call: <code>0</code> <br>&#8226; Call Booking %: <code>0%</code>  | Goal: <code>75%</code> <br>&#8226; Closes: <code>0</code><br>&#8226; Cash Collected for Coaching: <code>$0</code><br>    &nbsp;&nbsp;&#9702; Revenue for Coaching: <code>$0</code><br>cc   <br><br>Just noting for myself right now that so far we have gotten the most customers and the highest sales page conversion rate from the three numbers funnel, which is great to see. We\u2019ll scale up these lead magnets because they\u2019re actually going to help us drive the most sales by launching new lead magnets this week ASAP.<br><br> can you please add the Sales Page Conversion Rate for new followers? I\u2019m not seeing it. Thank yoU!<br><br>",
+      "prev_week": {
+        "revenue": 12784.0,
+        "roi": null,
+        "emails": 1343,
+        "optins": 30315
+      }
+    },
+    "The Lux Nomads": {
+      "name": "The Lux Nomads",
+      "airtable_account": null,
+      "airtable_data": {},
+      "metrics": {
+        "revenue": {
+          "weekly_cash": 0.0
+        },
+        "roi": null,
+        "emails": {
+          "new_weekly": 21,
+          "new_ratio": 95,
+          "total_captured_weekly": 43
+        },
+        "total_optins": 296
+      },
+      "posted_by": "U088X6AJ7QU",
+      "posted_at": "1774266226.648189",
+      "raw_html": "<strong>\u2014 Total DM Traffic for the Month \u2014</strong><br>&#8226; New Followers in March: <code>5,907</code> | March\u2019s Goal: <code>15,473</code><br>&#8226; Opt-ins from Story Replies in March: <code>226</code> | March\u2019s Goal: <code>7,737</code><br>&#8226; Opt-ins from Post Comments in March: <code>553</code> | March\u2019s Goal: <code>10,831</code><br><strong>\u2014 Total Results for the Month (v2) \u2014</strong><br>&#8226; Completed Funnel: <code>78</code> <br>&#8226; Qualified Leads: <code>19</code> <br>    &nbsp;&nbsp;&#9702; Qualified Ratio: <code>24%</code> | Goal: <code>14%</code> <br>&#8226; Calls Booked: <code>11</code><br>    &nbsp;&nbsp;&#9702; Call Booking Ratio: <code>57%</code> | Goal: <code>40%</code> <br>&#8226; Showed Calls: <code>4</code><br>    &nbsp;&nbsp;&#9702; Call Booking Ratio: <code>36%</code> | Goal: <code>66%</code> <br>&#8226; Customers: <code>0</code><br>&#8226; Cash Collected: <code>$0</code><br> <strong>ANALYTICS:</strong><br><em>Date range is from 3/15 00:00 EST - 3/21 at 23:59 EST</em><br><br><strong>\u2014 Spain Call Booking \u2014</strong><br>&#8226; Opt-ins: <code>296</code><br>    &nbsp;&nbsp;&#9702; Opt-ins by Placement: <br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Stories: <code>54</code> | Traffic Contribution: <code>18%</code> | Traffic Contribution Goal: <code>50%</code><br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; Posts: <code>242</code> | Traffic Contribution: <code>82%</code> | Traffic Contribution Goal: <code>50%</code><br>    &nbsp;&nbsp;&#9702; Opt-ins by Keyword:<br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; LUX: <code>191</code> | Traffic Contribution: <code>64%</code> | Traffic Contribution Goal: <code>33%</code><br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; START: <code>46</code> | Traffic Contribution: <code>15%</code> | Traffic Contribution Goal: <code>33%</code><br>        &nbsp;&nbsp;&nbsp;&nbsp;&#9642; APPLY: <code>64</code> | Traffic Contribution: <code>21%</code> | Traffic Contribution Goal: <code>33%</code><br>&#8226; Emails Captured: <code>22</code><br>&#8226; New Emails Captured: <code>21</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>95%</code> | Goal: <code>43%</code> <br>&#8226; Clicks to VSL page: <code>180</code><br>    &nbsp;&nbsp;&#9702; Click Rate to VSL Page: <code>60%</code> | Goal: <code>40%</code><br>&#8226; Completed Funnel: <code>25</code> <br>    &nbsp;&nbsp;&#9702; Funnel Completion Ratio: <code>13%</code> | Goal: <code>70%</code> <br>&#8226; Qualified Leads: <code>7</code> <br>    &nbsp;&nbsp;&#9702; Qualified Ratio: <code>33%</code> | Goal: <code>14%</code> <br>&#8226; Click Rate to Call Booking: <code>59%</code> | Goal: <code>40%</code> <br>&#8226; Calls Booked: <code>3</code><br>    &nbsp;&nbsp;&#9702; Call Booking Ratio: <code>42%</code> | Goal: <code>40%</code> <br>&#8226; Customers: <code>0</code><br>&#8226; Cash Collected: <code>$0</code><br>  <br><br>",
+      "prev_week": {
+        "revenue": 0,
+        "roi": null,
+        "emails": 70,
+        "optins": 419
+      }
+    },
+    "Helen Leland": {
+      "name": "Helen Leland",
+      "airtable_account": "Helen Leland",
+      "airtable_data": {
+        "id": "recLN0d6pRf69pZxS",
+        "stage": "Months 2\u20133: Monthly Meetings ",
+        "mrr": 13000,
+        "on_track": "",
+        "months_active": 3
+      },
+      "metrics": {
+        "revenue": {
+          "monthly": 1178.0,
+          "total": 30977.0
+        },
+        "roi": 0.86,
+        "emails": {
+          "new_ratio": 88,
+          "total_captured_weekly": 1745
+        },
+        "total_optins": null
+      },
+      "posted_by": "U088X6AJ7QU",
+      "posted_at": "1774266213.515279",
+      "raw_html": "--------<br><br><strong>\u2014 Total #\u2018s since December 23 (Day 1 of this system) \u2014</strong><br><br><strong>Revenue</strong><br>&#8226; Total Revenue: <code>$30,977</code><br>    &nbsp;&nbsp;&#9702; ROI: <code>0.86x</code><br>&#8226; Current Month Revenue: <code>$1,178</code><br>-------------------------------------------------------<br><br> LAST 7 DAYS OF STATS<br><em>Date range is from 3/15 00:00 EST - 3/21 at 23:59 EST</em><br><br><strong>\u2014 Sessions: 10-Day Reset \u2014</strong><br>&#8226; Incoming DMs: <code>167</code><br>    &nbsp;&nbsp;&#9702; Stories: <code>62</code> | Traffic Contribution: <code>37%</code> | Traffic Contribution Goal: <code>50%</code><br>    &nbsp;&nbsp;&#9702; Posts: <code>105</code> | Traffic Contribution: <code>63%</code> | Traffic Contribution Goal: <code>50%</code><br>&#8226; Emails Captured: <code>122</code><br>&#8226; New Emails Capture: <code>108</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>88%</code> | Goal: <code>43%</code> <br>&#8226; Clicks to Sales Page: <code>64</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>52%</code> | Goal: <code>50%</code><br>&#8226; Purchases: <code>2</code><br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>3%</code> | Goal: <code>3%</code><br><strong>\u2014 Facial Exercises Video \u2014</strong><br>&#8226; Incoming DMs: <code>3,230</code><br>&#8226; Emails Captured: <code>1,622</code><br>&#8226; New Emails Capture: <code>1,572</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>96%</code> | Goal: <code>43%</code><br>&#8226; Clicks to Video LP: <code>855</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>52%</code> | Goal: <code>50%</code><br>&#8226; Clicks to Sessions LP: <code>202</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>12%</code> | Goal: <code>50%</code><br>&#8226; Purchases: <code>2</code><br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>1%</code> | Goal: <code>3%</code><br><strong>\u2014 6 Drink Rule \u2014</strong><br>&#8226; Incoming DMs: <code>3</code><br>&#8226; Emails Captured: <code>1</code><br>&#8226; New Emails Capture: <code>1</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>100%</code> | Goal: <code>43%</code><br>&#8226; Clicks to Guide LP: <code>1</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>100%</code> | Goal: <code>50%</code><br>&#8226; Clicks to Sessions LP: <code>0</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>0%</code> | Goal: <code>50%</code><br>&#8226; Purchases: <code>0</code> <br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>0%</code> | Goal: <code>3%</code><br><strong>\u2014 Barefaced Poloshing Pads \u2014</strong><br>&#8226; Incoming DMs: <code>0</code><br>&#8226; Emails Captured: <code>0</code><br>&#8226; New Emails Capture: <code>0</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>0%</code> | Goal: <code>43%</code><br>&#8226; Clicks to Affiliate LP: <code>0</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>0%</code> | Goal: <code>50%</code><br>&#8226; Purchases: <code>0</code><br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>0%</code> | Goal: <code>3%</code><br><strong>\u2014 ZIIP Beauty \u2014</strong><br>&#8226; Incoming DMs: <code>0</code><br>&#8226; Emails Captured: <code>0</code><br>&#8226; New Emails Capture: <code>0</code> <br>    &nbsp;&nbsp;&#9702; New Email Ratio: <code>0%</code> | Goal: <code>43%</code><br>&#8226; Clicks to Affiliate LP: <code>0</code><br>    &nbsp;&nbsp;&#9702; Click Rate: <code>0%</code> | Goal: <code>50%</code><br>&#8226; Purchases: <code>0</code><br>    &nbsp;&nbsp;&#9702; Purchase Rate: <code>0%</code> | Goal: <code>3%</code><br>cc <br><br>",
+      "prev_week": {
+        "revenue": 645.0,
+        "roi": 0.78,
+        "emails": 1177,
+        "optins": 0
+      }
+    }
+  },
+  "targets": {
+    "roi": 2.0,
+    "weekly_revenue_per_client": 4615,
+    "weekly_email_subs": 1250
+  }
+}
