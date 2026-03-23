@@ -138,6 +138,11 @@
 
   .loading { text-align:center; padding:60px; color:var(--text-muted); font-size:18px; }
 
+  /* Auto-filled indicators */
+  .auto-tag { font-size:10px; font-weight:400; color:var(--accent); background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:3px; margin-left:6px; text-transform:none; letter-spacing:0; }
+  .editable-field.auto-filled { border-color:rgba(99,102,241,0.3); color:var(--text-muted); font-style:italic; }
+  .editable-field.auto-filled:focus { color:var(--text); font-style:normal; border-color:var(--accent); }
+
   /* Historical notes */
   .history-selector { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
   .history-selector select { padding:4px 8px; background:var(--bg); border:1px solid var(--border); border-radius:4px; color:var(--text); font-size:12px; }
@@ -311,6 +316,82 @@ function suggestHealth(client) {
   return null;
 }
 
+// --- AUTO-FILL: Generate wins, flags, opportunities from data ---
+function generateInsights(client) {
+  const c = client;
+  const rev = c.metrics.revenue;
+  const revAmount = rev.monthly || rev.weekly || rev.weekly_cash || 0;
+  const roi = c.metrics.roi;
+  const emails = c.metrics.emails;
+  const emailCount = emails.total_captured_weekly || emails.new_weekly || 0;
+  const optins = c.metrics.total_optins || 0;
+  const prev = c.prev_week || {};
+  const prevRev = prev.revenue || 0;
+  const prevEmails = prev.emails || 0;
+  const prevOptins = prev.optins || 0;
+  const acct = c.airtable_data || {};
+
+  const wins = [];
+  const flags = [];
+  const opportunities = [];
+  const context = [];
+
+  // Revenue analysis
+  if (revAmount > 0 && prevRev > 0) {
+    const revChange = ((revAmount - prevRev) / prevRev) * 100;
+    if (revChange > 20) wins.push(`Revenue up ${Math.round(revChange)}% week-over-week ($${Math.round(revAmount).toLocaleString()} vs $${Math.round(prevRev).toLocaleString()} last week)`);
+    else if (revChange < -20) flags.push(`Revenue down ${Math.abs(Math.round(revChange))}% week-over-week ($${Math.round(revAmount).toLocaleString()} vs $${Math.round(prevRev).toLocaleString()} last week)`);
+  }
+  if (revAmount === 0 && prevRev > 0) flags.push(`$0 revenue this week (was $${Math.round(prevRev).toLocaleString()} last week)`);
+
+  // ROI analysis
+  if (roi !== null && roi !== undefined) {
+    if (roi >= 3) wins.push(`Strong ROI at ${roi}x (target: 2x)`);
+    else if (roi >= 2) wins.push(`ROI hitting target at ${roi}x`);
+    else if (roi >= 1) flags.push(`ROI at ${roi}x — below 2x target but still positive`);
+    else flags.push(`ROI below 1x (${roi}x) — client is not getting return on investment`);
+  }
+
+  // Email analysis
+  if (emailCount > 0 && prevEmails > 0) {
+    const emailChange = ((emailCount - prevEmails) / prevEmails) * 100;
+    if (emailChange > 30) wins.push(`Email capture up ${Math.round(emailChange)}% (${emailCount.toLocaleString()} this week)`);
+    else if (emailChange < -30) flags.push(`Email capture down ${Math.abs(Math.round(emailChange))}% (${emailCount.toLocaleString()} vs ${prevEmails.toLocaleString()} last week)`);
+  }
+
+  // New email ratio
+  if (emails.new_ratio) {
+    if (emails.new_ratio >= 80) wins.push(`${emails.new_ratio}% new email ratio — strong list growth`);
+    else if (emails.new_ratio < 30) flags.push(`Only ${emails.new_ratio}% new email ratio — mostly repeat subscribers`);
+  }
+
+  // Opt-in analysis
+  if (optins > 0 && prevOptins > 0) {
+    const optinChange = ((optins - prevOptins) / prevOptins) * 100;
+    if (optinChange > 30) wins.push(`Opt-ins up ${Math.round(optinChange)}% (${optins.toLocaleString()} this week)`);
+    else if (optinChange < -30) flags.push(`Opt-ins down ${Math.abs(Math.round(optinChange))}% (${optins.toLocaleString()} vs ${prevOptins.toLocaleString()} last week)`);
+  }
+
+  // Opportunities from data patterns
+  if (revAmount === 0 && optins > 500) opportunities.push(`High traffic (${optins.toLocaleString()} opt-ins) but $0 revenue — conversion optimization opportunity`);
+  if (roi && roi < 2 && emailCount > 1000) opportunities.push(`Large email list (${emailCount.toLocaleString()}/week) with sub-2x ROI — email monetization could close the gap`);
+  if (optins > 3000) opportunities.push(`${optins.toLocaleString()} weekly opt-ins — high volume client, test new funnels or upsells`);
+  if (revAmount > 0 && !roi) opportunities.push(`Revenue is flowing but no ROI tracked — get the 3-month ROI calculation running`);
+
+  // Context from account data
+  if (acct.months_active && acct.months_active <= 2) context.push(`New client (${acct.months_active} month${acct.months_active > 1 ? 's' : ''}) — still in ramp-up phase`);
+  if (acct.months_active && acct.months_active >= 12) context.push(`Long-term client (${acct.months_active} months) — focus on retention and expansion`);
+  if (acct.stage && acct.stage.includes('Week 1')) context.push(`In Week 1 onboarding — limited data expected`);
+  if (acct.stage && acct.stage.includes('Quarterly')) context.push(`In quarterly engagement phase — self-running, check-in cadence`);
+
+  return {
+    wins: wins.join('\n'),
+    flags: flags.join('\n'),
+    opportunity: opportunities.join('\n'),
+    context: context.join('\n'),
+  };
+}
+
 // --- UPGRADE 1: Week-over-Week Change ---
 function renderChange(current, previous) {
   if (!current || !previous || previous === 0) return '';
@@ -386,7 +467,12 @@ function renderDashboard() {
   });
 
   document.querySelectorAll('.editable-field').forEach(el => {
-    el.addEventListener('input', () => { scheduleNoteSave(el.dataset.client, el.dataset.field, el.value); });
+    el.addEventListener('input', () => {
+      el.classList.remove('auto-filled');
+      const tag = el.previousElementSibling;
+      if (tag && tag.querySelector('.auto-tag')) tag.querySelector('.auto-tag').remove();
+      scheduleNoteSave(el.dataset.client, el.dataset.field, el.value);
+    });
   });
 
   // IDS buttons
@@ -416,6 +502,7 @@ function renderDashboard() {
 function renderClientRow(client) {
   const c = client;
   const notes = getNotesForClient(c.name);
+  const insights = generateInsights(c);
   const health = notes.health || '';
   const suggestion = suggestHealth(c);
   const effectiveHealth = health || suggestion || '';
@@ -489,16 +576,16 @@ function renderClientRow(client) {
               <div class="health-option red ${health==='Red'?'selected':''}" data-client="${esc(c.name)}" data-health="Red">Red</div>
             </div>
             ${histSelector}
-            <h4>Opportunity</h4>
-            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="opportunity" placeholder="Growth opportunity?">${notes.opportunity||''}</textarea>
-            <h4 style="margin-top:12px">Wins</h4>
-            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="wins" placeholder="What went well?">${notes.wins||''}</textarea>
+            <h4>Opportunity ${!notes.opportunity && insights.opportunity ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
+            <textarea class="editable-field ${!notes.opportunity && insights.opportunity ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="opportunity" placeholder="Growth opportunity?">${notes.opportunity || insights.opportunity || ''}</textarea>
+            <h4 style="margin-top:12px">Wins ${!notes.wins && insights.wins ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
+            <textarea class="editable-field ${!notes.wins && insights.wins ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="wins" placeholder="What went well?">${notes.wins || insights.wins || ''}</textarea>
           </div>
           <div class="detail-section">
-            <h4>Flags</h4>
-            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="flags" placeholder="Risks or blockers?">${notes.flags||''}</textarea>
-            <h4 style="margin-top:12px">Context</h4>
-            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="context" placeholder="Important context?">${notes.context||''}</textarea>
+            <h4>Flags ${!notes.flags && insights.flags ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
+            <textarea class="editable-field ${!notes.flags && insights.flags ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="flags" placeholder="Risks or blockers?">${notes.flags || insights.flags || ''}</textarea>
+            <h4 style="margin-top:12px">Context ${!notes.context && insights.context ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
+            <textarea class="editable-field ${!notes.context && insights.context ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="context" placeholder="Important context?">${notes.context || insights.context || ''}</textarea>
             <div class="ids-btn" onclick="event.stopPropagation()">&#9888; Flag as IDS Issue</div>
             <div class="ids-input">
               <textarea class="editable-field" style="min-height:40px" placeholder="Describe the issue to IDS..."></textarea>
