@@ -519,7 +519,7 @@ function renderClientRow(client) {
         </div>
         <div class="detail-section" style="margin-top:16px">
           <h4>Weekly stats from Slack</h4>
-          <div class="raw-stats">${c.raw_html || '<em>No stats posted in Slack this week</em>'}</div>
+          <div class="raw-stats">${(c.raw_html || '<em>No stats posted in Slack this week</em>').replace(/<a[^>]*>(.*?)<\/a>/gi, '$1')}</div>
         </div>
       </div>
     </div>`;
