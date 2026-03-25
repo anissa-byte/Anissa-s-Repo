@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOB DFY — L10 Dashboard</title>
+<title>SOB DFY — L10 Scorecard</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/School-of-Bots/done-for-you-division/main/context-library/brand/favicon.png">
 <style>
   :root {
-    --bg: #0f0f0f; --surface: #1a1a1a; --surface2: #242424;
-    --border: #333; --text: #e5e5e5; --text-muted: #888; --accent: #6366f1;
-    --green: #22c55e; --yellow: #eab308; --red: #ef4444;
-    --green-bg: rgba(34,197,94,0.1); --yellow-bg: rgba(234,179,8,0.1); --red-bg: rgba(239,68,68,0.1);
+    --bg: #ffffff; --surface: #f8f8f8; --surface2: #f0f0f0;
+    --border: #e2e2e2; --text: #1a1a1a; --text-muted: #6b6b6b; --accent: #C4962C;
+    --accent-light: rgba(196,150,44,0.08); --accent-hover: #A87D1F;
+    --green: #16a34a; --yellow: #ca8a04; --red: #dc2626;
+    --green-bg: rgba(22,163,74,0.08); --yellow-bg: rgba(202,138,4,0.08); --red-bg: rgba(220,38,38,0.08);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
@@ -17,26 +19,30 @@
   /* Password gate */
   #password-gate { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:1000; flex-direction:column; gap:16px; }
   #password-gate.hidden { display:none; }
-  #password-gate h2 { font-size:24px; font-weight:600; }
+  #password-gate img.gate-logo { width:48px; height:48px; margin-bottom:8px; }
+  #password-gate h2 { font-size:22px; font-weight:600; color:var(--text); }
   #password-gate input { padding:12px 20px; font-size:18px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text); text-align:center; width:240px; }
-  #password-gate input:focus { outline:none; border-color:var(--accent); }
+  #password-gate input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-light); }
   #password-gate .error { color:var(--red); font-size:14px; min-height:20px; }
 
   #dashboard { display:none; }
   #dashboard.visible { display:block; }
 
   /* Header */
-  .header { padding:20px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
-  .header-left { display:flex; align-items:center; gap:24px; }
-  .header h1 { font-size:28px; font-weight:700; background:linear-gradient(135deg,#6366f1,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header { padding:20px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--bg); }
+  .header-left { display:flex; align-items:center; gap:20px; }
+  .header-brand { display:flex; align-items:center; gap:12px; }
+  .header-brand img { width:32px; height:32px; }
+  .header h1 { font-size:24px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+  .header h1 span { color:var(--accent); }
   .header .meta { color:var(--text-muted); font-size:14px; text-align:right; }
   .header .week { font-size:18px; color:var(--text); font-weight:500; }
 
   /* Meeting timer */
   .timer { display:flex; align-items:center; gap:8px; padding:8px 16px; background:var(--surface); border-radius:8px; border:1px solid var(--border); }
-  .timer .time { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; min-width:60px; }
+  .timer .time { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; min-width:60px; color:var(--text); }
   .timer .label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
-  .timer.over-time { border-color:var(--yellow); }
+  .timer.over-time { border-color:var(--yellow); background:var(--yellow-bg); }
   .timer.over-time .time { color:var(--yellow); }
   .client-timer { font-size:12px; color:var(--text-muted); font-variant-numeric:tabular-nums; }
   .client-timer.over { color:var(--yellow); }
@@ -47,9 +53,9 @@
 
   /* Summary cards */
   .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; padding:24px 32px; }
-  .card { background:var(--surface); border-radius:12px; padding:20px; border:1px solid var(--border); }
+  .card { background:var(--bg); border-radius:12px; padding:20px; border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,0.04); }
   .card .label { font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:4px; }
-  .card .value { font-size:32px; font-weight:700; }
+  .card .value { font-size:32px; font-weight:700; color:var(--text); }
   .card .sub { font-size:13px; color:var(--text-muted); margin-top:4px; }
   .card .target { font-size:12px; color:var(--text-muted); margin-top:2px; }
   .progress-bar { height:4px; background:var(--surface2); border-radius:2px; margin-top:8px; overflow:hidden; }
@@ -67,18 +73,18 @@
   /* Client rows */
   .clients { padding:0 32px 32px; }
   .clients-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-  .clients-header h2 { font-size:18px; color:var(--text-muted); font-weight:500; }
+  .clients-header h2 { font-size:16px; color:var(--text-muted); font-weight:500; }
 
-  .client-row { background:var(--surface); border-radius:12px; margin-bottom:12px; border:1px solid var(--border); overflow:hidden; transition:border-color 0.2s; }
-  .client-row:hover { border-color:#444; }
+  .client-row { background:var(--bg); border-radius:12px; margin-bottom:12px; border:1px solid var(--border); overflow:hidden; transition:border-color 0.2s, box-shadow 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+  .client-row:hover { border-color:#ccc; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
   .client-row.health-red { border-left:4px solid var(--red); }
   .client-row.health-yellow { border-left:4px solid var(--yellow); }
   .client-row.health-green { border-left:4px solid var(--green); }
 
   .client-summary { display:grid; grid-template-columns:200px repeat(4,1fr) 100px 40px; align-items:center; padding:16px 20px; cursor:pointer; gap:12px; }
-  .client-summary:hover { background:var(--surface2); }
+  .client-summary:hover { background:var(--surface); }
 
-  .client-name { font-weight:600; font-size:16px; }
+  .client-name { font-weight:600; font-size:16px; color:var(--text); }
   .client-name .sub-info { font-size:12px; color:var(--text-muted); font-weight:400; }
   .client-name .suggested-health { font-size:10px; padding:2px 6px; border-radius:4px; margin-left:4px; }
   .client-name .suggested-health.green { background:var(--green-bg); color:var(--green); }
@@ -86,7 +92,7 @@
   .client-name .suggested-health.red { background:var(--red-bg); color:var(--red); }
 
   .metric { text-align:center; }
-  .metric .val { font-size:18px; font-weight:600; }
+  .metric .val { font-size:18px; font-weight:600; color:var(--text); }
   .metric .lbl { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
   .metric .val.positive { color:var(--green); }
   .metric .val.warning { color:var(--yellow); }
@@ -106,12 +112,12 @@
   .client-row.expanded .client-detail { display:block; }
 
   .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
-  .detail-section { background:var(--surface2); border-radius:8px; padding:16px; }
+  .detail-section { background:var(--surface); border-radius:8px; padding:16px; }
   .detail-section h4 { font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin-bottom:12px; }
 
-  .editable-field { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; color:var(--text); font-family:inherit; font-size:14px; resize:vertical; min-height:60px; transition:border-color 0.2s; }
-  .editable-field:focus { outline:none; border-color:var(--accent); }
-  .editable-field::placeholder { color:#555; }
+  .editable-field { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; color:var(--text); font-family:inherit; font-size:14px; resize:vertical; min-height:60px; transition:border-color 0.2s, box-shadow 0.2s; }
+  .editable-field:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-light); }
+  .editable-field::placeholder { color:#999; }
 
   .health-selector { display:flex; gap:8px; margin-bottom:12px; }
   .health-option { padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
@@ -121,27 +127,22 @@
   .health-option.selected { border-color:currentColor; }
   .health-option:hover { opacity:0.8; }
 
-  .raw-stats { font-size:13px; line-height:1.7; max-height:400px; overflow-y:auto; padding:12px; background:var(--bg); border-radius:6px; }
-  .raw-stats code { background:var(--surface2); padding:1px 5px; border-radius:3px; color:var(--accent); }
-  .raw-stats strong { color:#fff; }
+  .raw-stats { font-size:13px; line-height:1.7; max-height:400px; overflow-y:auto; padding:12px; background:var(--surface); border-radius:6px; border:1px solid var(--border); }
+  .raw-stats code { background:var(--accent-light); padding:1px 5px; border-radius:3px; color:var(--accent-hover); }
+  .raw-stats strong { color:var(--text); }
 
   /* IDS button */
   .ids-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; background:var(--red-bg); color:var(--red); border:1px solid var(--red); border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; margin-top:12px; }
-  .ids-btn:hover { background:rgba(239,68,68,0.2); }
+  .ids-btn:hover { background:rgba(220,38,38,0.12); }
   .ids-input { display:none; margin-top:8px; }
   .ids-input.visible { display:block; }
   .ids-submit { padding:6px 14px; background:var(--red); color:#fff; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; margin-top:6px; }
 
   /* Save indicator */
-  .save-status { position:fixed; bottom:24px; right:24px; background:var(--green); color:#000; padding:10px 20px; border-radius:8px; font-weight:600; font-size:14px; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+  .save-status { position:fixed; bottom:24px; right:24px; background:var(--accent); color:#fff; padding:10px 20px; border-radius:8px; font-weight:600; font-size:14px; opacity:0; transition:opacity 0.3s; pointer-events:none; box-shadow:0 2px 8px rgba(0,0,0,0.12); }
   .save-status.visible { opacity:1; }
 
   .loading { text-align:center; padding:60px; color:var(--text-muted); font-size:18px; }
-
-  /* Auto-filled indicators */
-  .auto-tag { font-size:10px; font-weight:400; color:var(--accent); background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:3px; margin-left:6px; text-transform:none; letter-spacing:0; }
-  .editable-field.auto-filled { border-color:rgba(99,102,241,0.3); color:var(--text-muted); font-style:italic; }
-  .editable-field.auto-filled:focus { color:var(--text); font-style:normal; border-color:var(--accent); }
 
   /* Historical notes */
   .history-selector { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
@@ -155,7 +156,8 @@
 <body>
 
 <div id="password-gate">
-  <h2>SOB DFY — L10 Dashboard</h2>
+  <img class="gate-logo" src="https://raw.githubusercontent.com/School-of-Bots/done-for-you-division/main/context-library/brand/favicon.png" alt="School of Bots">
+  <h2>L10 Scorecard</h2>
   <input type="password" id="password-input" placeholder="Enter password" autofocus>
   <div class="error" id="password-error"></div>
 </div>
@@ -163,8 +165,9 @@
 <div id="dashboard">
   <div class="header">
     <div class="header-left">
-      <div>
-        <h1>DFY L10 Scorecard</h1>
+      <div class="header-brand">
+        <img src="https://raw.githubusercontent.com/School-of-Bots/done-for-you-division/main/context-library/brand/favicon.png" alt="SOB">
+        <h1>L10 <span>Scorecard</span></h1>
       </div>
       <div class="timer" id="meeting-timer">
         <div>
@@ -183,7 +186,7 @@
 
   <div class="clients">
     <div class="clients-header">
-      <h2>Client Review — sorted by health (reds first)</h2>
+      <h2>Client review, sorted by health</h2>
     </div>
     <div id="client-list"><div class="loading">Loading stats...</div></div>
   </div>
@@ -316,82 +319,6 @@ function suggestHealth(client) {
   return null;
 }
 
-// --- AUTO-FILL: Generate wins, flags, opportunities from data ---
-function generateInsights(client) {
-  const c = client;
-  const rev = c.metrics.revenue;
-  const revAmount = rev.monthly || rev.weekly || rev.weekly_cash || 0;
-  const roi = c.metrics.roi;
-  const emails = c.metrics.emails;
-  const emailCount = emails.total_captured_weekly || emails.new_weekly || 0;
-  const optins = c.metrics.total_optins || 0;
-  const prev = c.prev_week || {};
-  const prevRev = prev.revenue || 0;
-  const prevEmails = prev.emails || 0;
-  const prevOptins = prev.optins || 0;
-  const acct = c.airtable_data || {};
-
-  const wins = [];
-  const flags = [];
-  const opportunities = [];
-  const context = [];
-
-  // Revenue analysis
-  if (revAmount > 0 && prevRev > 0) {
-    const revChange = ((revAmount - prevRev) / prevRev) * 100;
-    if (revChange > 20) wins.push(`Revenue up ${Math.round(revChange)}% week-over-week ($${Math.round(revAmount).toLocaleString()} vs $${Math.round(prevRev).toLocaleString()} last week)`);
-    else if (revChange < -20) flags.push(`Revenue down ${Math.abs(Math.round(revChange))}% week-over-week ($${Math.round(revAmount).toLocaleString()} vs $${Math.round(prevRev).toLocaleString()} last week)`);
-  }
-  if (revAmount === 0 && prevRev > 0) flags.push(`$0 revenue this week (was $${Math.round(prevRev).toLocaleString()} last week)`);
-
-  // ROI analysis
-  if (roi !== null && roi !== undefined) {
-    if (roi >= 3) wins.push(`Strong ROI at ${roi}x (target: 2x)`);
-    else if (roi >= 2) wins.push(`ROI hitting target at ${roi}x`);
-    else if (roi >= 1) flags.push(`ROI at ${roi}x — below 2x target but still positive`);
-    else flags.push(`ROI below 1x (${roi}x) — client is not getting return on investment`);
-  }
-
-  // Email analysis
-  if (emailCount > 0 && prevEmails > 0) {
-    const emailChange = ((emailCount - prevEmails) / prevEmails) * 100;
-    if (emailChange > 30) wins.push(`Email capture up ${Math.round(emailChange)}% (${emailCount.toLocaleString()} this week)`);
-    else if (emailChange < -30) flags.push(`Email capture down ${Math.abs(Math.round(emailChange))}% (${emailCount.toLocaleString()} vs ${prevEmails.toLocaleString()} last week)`);
-  }
-
-  // New email ratio
-  if (emails.new_ratio) {
-    if (emails.new_ratio >= 80) wins.push(`${emails.new_ratio}% new email ratio — strong list growth`);
-    else if (emails.new_ratio < 30) flags.push(`Only ${emails.new_ratio}% new email ratio — mostly repeat subscribers`);
-  }
-
-  // Opt-in analysis
-  if (optins > 0 && prevOptins > 0) {
-    const optinChange = ((optins - prevOptins) / prevOptins) * 100;
-    if (optinChange > 30) wins.push(`Opt-ins up ${Math.round(optinChange)}% (${optins.toLocaleString()} this week)`);
-    else if (optinChange < -30) flags.push(`Opt-ins down ${Math.abs(Math.round(optinChange))}% (${optins.toLocaleString()} vs ${prevOptins.toLocaleString()} last week)`);
-  }
-
-  // Opportunities from data patterns
-  if (revAmount === 0 && optins > 500) opportunities.push(`High traffic (${optins.toLocaleString()} opt-ins) but $0 revenue — conversion optimization opportunity`);
-  if (roi && roi < 2 && emailCount > 1000) opportunities.push(`Large email list (${emailCount.toLocaleString()}/week) with sub-2x ROI — email monetization could close the gap`);
-  if (optins > 3000) opportunities.push(`${optins.toLocaleString()} weekly opt-ins — high volume client, test new funnels or upsells`);
-  if (revAmount > 0 && !roi) opportunities.push(`Revenue is flowing but no ROI tracked — get the 3-month ROI calculation running`);
-
-  // Context from account data
-  if (acct.months_active && acct.months_active <= 2) context.push(`New client (${acct.months_active} month${acct.months_active > 1 ? 's' : ''}) — still in ramp-up phase`);
-  if (acct.months_active && acct.months_active >= 12) context.push(`Long-term client (${acct.months_active} months) — focus on retention and expansion`);
-  if (acct.stage && acct.stage.includes('Week 1')) context.push(`In Week 1 onboarding — limited data expected`);
-  if (acct.stage && acct.stage.includes('Quarterly')) context.push(`In quarterly engagement phase — self-running, check-in cadence`);
-
-  return {
-    wins: wins.join('\n'),
-    flags: flags.join('\n'),
-    opportunity: opportunities.join('\n'),
-    context: context.join('\n'),
-  };
-}
-
 // --- UPGRADE 1: Week-over-Week Change ---
 function renderChange(current, previous) {
   if (!current || !previous || previous === 0) return '';
@@ -423,7 +350,7 @@ function renderDashboard() {
       <div class="value">${ds.active_clients} ${renderChange(ds.active_clients, pds.active_clients)}</div>
     </div>
     <div class="card">
-      <div class="label">Monthly Revenue</div>
+      <div class="label">Monthly Revenue Influenced</div>
       <div class="value">${fmt$(ds.total_revenue_monthly)} ${renderChange(ds.total_revenue_monthly, pds.total_revenue_monthly)}</div>
       <div class="sub">Weekly: ${fmt$(ds.total_revenue_weekly)} ${renderChange(ds.total_revenue_weekly, pds.total_revenue_weekly)}</div>
     </div>
@@ -467,12 +394,7 @@ function renderDashboard() {
   });
 
   document.querySelectorAll('.editable-field').forEach(el => {
-    el.addEventListener('input', () => {
-      el.classList.remove('auto-filled');
-      const tag = el.previousElementSibling;
-      if (tag && tag.querySelector('.auto-tag')) tag.querySelector('.auto-tag').remove();
-      scheduleNoteSave(el.dataset.client, el.dataset.field, el.value);
-    });
+    el.addEventListener('input', () => { scheduleNoteSave(el.dataset.client, el.dataset.field, el.value); });
   });
 
   // IDS buttons
@@ -502,7 +424,6 @@ function renderDashboard() {
 function renderClientRow(client) {
   const c = client;
   const notes = getNotesForClient(c.name);
-  const insights = generateInsights(c);
   const health = notes.health || '';
   const suggestion = suggestHealth(c);
   const effectiveHealth = health || suggestion || '';
@@ -548,7 +469,7 @@ function renderClientRow(client) {
         </div>
         <div class="metric">
           <div class="val">${displayRevenue > 0 ? fmt$(displayRevenue) : '—'} ${renderChange(displayRevenue, prevRev)}</div>
-          <div class="lbl">${revenueLabel} Rev</div>
+          <div class="lbl">${revenueLabel} rev influenced</div>
         </div>
         <div class="metric">
           <div class="val ${roiClass}">${roi ? roi+'x' : '—'} ${renderChange(roi, prev.roi)}</div>
@@ -576,26 +497,26 @@ function renderClientRow(client) {
               <div class="health-option red ${health==='Red'?'selected':''}" data-client="${esc(c.name)}" data-health="Red">Red</div>
             </div>
             ${histSelector}
-            <h4>Opportunity ${!notes.opportunity && insights.opportunity ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
-            <textarea class="editable-field ${!notes.opportunity && insights.opportunity ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="opportunity" placeholder="Growth opportunity?">${notes.opportunity || insights.opportunity || ''}</textarea>
-            <h4 style="margin-top:12px">Wins ${!notes.wins && insights.wins ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
-            <textarea class="editable-field ${!notes.wins && insights.wins ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="wins" placeholder="What went well?">${notes.wins || insights.wins || ''}</textarea>
+            <h4>Opportunity</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="opportunity" placeholder="Next growth lever for this client">${notes.opportunity||''}</textarea>
+            <h4 style="margin-top:12px">Wins</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="wins" placeholder="Documented wins this week">${notes.wins||''}</textarea>
           </div>
           <div class="detail-section">
-            <h4>Flags ${!notes.flags && insights.flags ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
-            <textarea class="editable-field ${!notes.flags && insights.flags ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="flags" placeholder="Risks or blockers?">${notes.flags || insights.flags || ''}</textarea>
-            <h4 style="margin-top:12px">Context ${!notes.context && insights.context ? '<span class="auto-tag">auto-filled from data</span>' : ''}</h4>
-            <textarea class="editable-field ${!notes.context && insights.context ? 'auto-filled' : ''}" data-client="${esc(c.name)}" data-field="context" placeholder="Important context?">${notes.context || insights.context || ''}</textarea>
-            <div class="ids-btn" onclick="event.stopPropagation()">&#9888; Flag as IDS Issue</div>
+            <h4>Flags</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="flags" placeholder="Risks, blockers, or items to escalate">${notes.flags||''}</textarea>
+            <h4 style="margin-top:12px">Context</h4>
+            <textarea class="editable-field" data-client="${esc(c.name)}" data-field="context" placeholder="Key context for this week's review">${notes.context||''}</textarea>
+            <div class="ids-btn" onclick="event.stopPropagation()">&#9888; Flag for IDS</div>
             <div class="ids-input">
-              <textarea class="editable-field" style="min-height:40px" placeholder="Describe the issue to IDS..."></textarea>
+              <textarea class="editable-field" style="min-height:40px" placeholder="Describe the issue clearly: what is happening, what is the impact"></textarea>
               <button class="ids-submit" data-client="${esc(c.name)}">Create Issue</button>
             </div>
           </div>
         </div>
         <div class="detail-section" style="margin-top:16px">
-          <h4>Full Stats from Slack</h4>
-          <div class="raw-stats">${c.raw_html || '<em>No detailed stats available</em>'}</div>
+          <h4>Weekly stats from Slack</h4>
+          <div class="raw-stats">${c.raw_html || '<em>No stats posted in Slack this week</em>'}</div>
         </div>
       </div>
     </div>`;
@@ -714,4 +635,3 @@ function esc(s) { return s.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 </script>
 </body>
 </html>
-<\!-- deployed -->
